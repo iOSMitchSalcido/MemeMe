@@ -26,7 +26,6 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
     
-    @IBOutlet var tapGr: UITapGestureRecognizer!
     // toolbar items, camera and album bbi's
     var cameraBbi: UIBarButtonItem!
     var albumBbi: UIBarButtonItem!
@@ -84,7 +83,7 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         stopKeyboardNotifications()
     }
     
-    // begin notifications for keyboard show
+    // begin notifications for keyboard show/hide
     func beginKeyboardNotifications() {
      
         // begin show notification
@@ -100,7 +99,7 @@ UINavigationControllerDelegate, UITextFieldDelegate {
                                                          object: nil)
     }
     
-    // stop notifications for keyboard show
+    // stop notifications for keyboard show/hide
     func stopKeyboardNotifications() {
         
         // end show notification

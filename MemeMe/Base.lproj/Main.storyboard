@@ -50,21 +50,20 @@
                             <constraint firstItem="H8s-NA-KUT" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="zdq-jx-C1W"/>
                         </constraints>
                         <connections>
-                            <outletCollection property="gestureRecognizers" destination="383-3o-wGI" appends="YES" id="DoF-z2-5I2"/>
+                            <outletCollection property="gestureRecognizers" destination="tri-o7-eo9" appends="YES" id="doT-bx-XAz"/>
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" id="3qc-t3-mDy"/>
                     <connections>
                         <outlet property="bottomTextField" destination="bY1-sF-sgd" id="FQO-dc-03H"/>
                         <outlet property="imageView" destination="fsW-QY-ywi" id="ozB-te-iXJ"/>
-                        <outlet property="tapGr" destination="383-3o-wGI" id="2P1-Eo-h2P"/>
                         <outlet property="topTextField" destination="H8s-NA-KUT" id="NhH-cg-uIT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="383-3o-wGI">
+                <tapGestureRecognizer id="tri-o7-eo9">
                     <connections>
-                        <action selector="tapDetected:" destination="BYZ-38-t0r" id="3Rq-Ul-z19"/>
+                        <action selector="tapDetected:" destination="BYZ-38-t0r" id="lPf-IL-w03"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
