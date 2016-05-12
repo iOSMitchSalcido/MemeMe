@@ -11,7 +11,8 @@
 
 import UIKit
 
-class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegate,
+UINavigationControllerDelegate, UITextFieldDelegate {
 
     // ref to view objects: imageView and textFields
     @IBOutlet weak var imageView: UIImageView!
@@ -21,7 +22,7 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     // toolbar items, camera and album bbi's
     var cameraBbi: UIBarButtonItem!
     var albumBbi: UIBarButtonItem!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -44,9 +45,14 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         
         // add bbi's to toolbar
         toolbarItems = [flexBbi, cameraBbi, flexBbi, albumBbi, flexBbi]
+        
+        // textFields
+        topTextField.delegate = self
+        bottomTextField.delegate = self
     }
     
     override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         
         // show top/bottom textFields only if an image is visible
         if imageView.image != nil {
@@ -58,9 +64,98 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
             topTextField.hidden = true
             bottomTextField.hidden = true
         }
+        
+        // begin keyboard notifications..used to shift bottom keybboard up when editing
+        beginKeyboardNotifications()
     }
     
-    // function to invoke UIImagePickerViewController
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // stop keyboard notifications while view not visible
+        stopKeyboardNotifications()
+    }
+    
+    // begin notifications for keyboard show
+    func beginKeyboardNotifications() {
+     
+        // begin show notification
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(MemeEditorViewController.keyboardWillShow(_:)),
+                                                         name: UIKeyboardWillShowNotification,
+                                                         object: nil)
+        
+        // begin hide notification
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(MemeEditorViewController.keyboardWillHide(_:)),
+                                                         name: UIKeyboardWillHideNotification,
+                                                         object: nil)
+    }
+    
+    // stop notifications for keyboard show
+    func stopKeyboardNotifications() {
+        
+        // end show notification
+        NSNotificationCenter.defaultCenter().removeObserver(self,
+                                                            name: UIKeyboardWillShowNotification,
+                                                            object: nil)
+        // end hide notification
+        NSNotificationCenter.defaultCenter().removeObserver(self,
+                                                            name: UIKeyboardWillHideNotification,
+                                                            object: nil)
+    }
+    
+    // keyboard about to show
+    func keyboardWillShow(notification: NSNotification) {
+        
+        // shift up only if bottomTextField is editing
+        if bottomTextField.editing {
+            
+            view.frame.origin.y -= getKeyboardHeight(notification)
+        }
+    }
+    
+    // keyboard about to hide
+    func keyboardWillHide(notification: NSNotification) {
+        
+        // shift back down only if previously shifted up
+        if view.frame.origin.y < 0.0 {
+            
+            view.frame.origin.y += getKeyboardHeight(notification)
+        }
+    }
+    
+    // return keyboard height
+    func getKeyboardHeight(notification: NSNotification) -> CGFloat {
+        
+        let userInfo = notification.userInfo
+        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue // of CGRect
+        return keyboardSize.CGRectValue().height
+    }
+    
+    // textField delegate function
+    func textFieldDidBeginEditing(textField: UITextField) {
+        
+        // dim image when editing text
+        imageView.alpha = 0.5
+    }
+    
+    // textField delegate function
+    func textFieldDidEndEditing(textField: UITextField) {
+        
+        // un-dim image when done editing text
+        imageView.alpha = 1.0
+    }
+    
+    // textField delegate function
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        
+        // return button ends editing, hide keyboard
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    // function to create/invoke UIImagePickerViewController
     func pickAnImage(sender: UIBarButtonItem) {
         
         // create imagePick, set photo source based on bbi that was pressed
@@ -96,4 +191,3 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         dismissViewControllerAnimated(true, completion: nil)
     }
 }
-
