@@ -190,7 +190,7 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     func imagePickerController(picker: UIImagePickerController,
                                didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
-        // imagePicker has selected and image, get image and show in imageView
+        // imagePicker has selected an image, get image and show in imageView
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             self.imageView.image = image
         }
