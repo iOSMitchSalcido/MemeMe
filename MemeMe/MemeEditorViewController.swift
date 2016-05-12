@@ -7,6 +7,13 @@
 //
 /*
  About MemeEditorViewController.swift:
+ 
+ VC provides functionality to take a snapshot (or select a photo from photo album), and then
+ create a Meme by adding text at top and bottom of photo:
+ - invoke imagePicker when "album" or "camera"(if available on ios device) bbi on toolbar is pressed
+ - place image on imageView on ios device screen
+ - provide editing of textFields at top/bottom of photo to customize Meme
+ - share Meme using activityViewController
  */
 
 import UIKit
