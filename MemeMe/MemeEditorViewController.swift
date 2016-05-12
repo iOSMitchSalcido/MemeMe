@@ -26,6 +26,7 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
     
+    @IBOutlet var tapGr: UITapGestureRecognizer!
     // toolbar items, camera and album bbi's
     var cameraBbi: UIBarButtonItem!
     var albumBbi: UIBarButtonItem!
@@ -160,6 +161,16 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         // return button ends editing, hide keyboard
         textField.resignFirstResponder()
         return true
+    }
+    
+    // action for tap gr
+    @IBAction func tapDetected(sender: UITapGestureRecognizer) {
+        
+        // end editing
+        if topTextField.editing || bottomTextField.editing {
+            
+            view.endEditing(true)
+        }
     }
     
     // function to create/invoke UIImagePickerViewController
