@@ -30,6 +30,11 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     var cameraBbi: UIBarButtonItem!
     var albumBbi: UIBarButtonItem!
 
+    // navbar bbi, share meme, preview Meme
+    var shareMemeBbi: UIBarButtonItem!
+    var previewMeme: UIBarButtonItem!
+    
+    //MARK: View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -53,6 +58,13 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         // add bbi's to toolbar
         toolbarItems = [flexBbi, cameraBbi, flexBbi, albumBbi, flexBbi]
         
+        // share meme bbi on left navbar
+        shareMemeBbi = UIBarButtonItem(barButtonSystemItem: .Action,
+                                       target: self,
+                                       action: #selector(MemeEditorViewController.shareMemeBbiPressed(_:)))
+        self.navigationItem.leftBarButtonItem = shareMemeBbi
+        
+        // preview meme bbi on right navbar
         // textFields
         topTextField.delegate = self
         bottomTextField.delegate = self
@@ -62,6 +74,7 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         super.viewWillAppear(animated)
         
         // show top/bottom textFields only if an image is visible
+        // enable shareMeme and Preview Meme only if image is visible
         if imageView.image != nil {
             
             topTextField.hidden = false
@@ -83,6 +96,7 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         stopKeyboardNotifications()
     }
     
+    //MARK: Keyboard notification functions
     // begin notifications for keyboard show/hide
     func beginKeyboardNotifications() {
      
@@ -140,36 +154,10 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         return keyboardSize.CGRectValue().height
     }
     
-    // textField delegate function
-    func textFieldDidBeginEditing(textField: UITextField) {
-        
-        // dim image when editing text
-        imageView.alpha = 0.5
-    }
-    
-    // textField delegate function
-    func textFieldDidEndEditing(textField: UITextField) {
-        
-        // un-dim image when done editing text
-        imageView.alpha = 1.0
-    }
-    
-    // textField delegate function
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        
-        // return button ends editing, hide keyboard
-        textField.resignFirstResponder()
-        return true
-    }
-    
-    // action for tap gr
-    @IBAction func tapDetected(sender: UITapGestureRecognizer) {
-        
-        // end editing
-        if topTextField.editing || bottomTextField.editing {
-            
-            view.endEditing(true)
-        }
+    //MARK: BBI Action functions
+    // shareMeme bbi pressed
+    func shareMemeBbiPressed(sender: UIBarButtonItem) {
+        print("shareMemeBbiPressed")
     }
     
     // function to create/invoke UIImagePickerViewController
@@ -189,6 +177,7 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         presentViewController(imagePickerController, animated: true, completion: nil)
     }
     
+    //MARK: ImagePicker Delegate functions
     // imagePickerController delegate function
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         
@@ -196,7 +185,7 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    // imagePickerController delegate function
+    // UIImageImagePickerController delegate function
     func imagePickerController(picker: UIImagePickerController,
                                didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
@@ -206,5 +195,55 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         }
         
         dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    //MARK: UITextField Delegate functions
+    // textField delegate function
+    func textFieldDidBeginEditing(textField: UITextField) {
+        
+        // dim image when editing text
+        imageView.alpha = 0.5
+    }
+    
+    // TextField delegate function
+    func textFieldDidEndEditing(textField: UITextField) {
+        
+        // un-dim image when done editing text
+        imageView.alpha = 1.0
+    }
+    
+    // textField delegate function
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        
+        // return button ends editing, hide keyboard
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    //MARK: UITapGestureRecognizer functions
+    // action for tap gr
+    @IBAction func tapDetected(sender: UITapGestureRecognizer) {
+        
+        // end editing
+        if topTextField.editing || bottomTextField.editing {
+            
+            view.endEditing(true)
+        }
+    }
+    
+    //MARK: Helper functions
+    
+    // take a screenshot of iOS device screen, return "Meme'd" image
+    func screenShot() -> UIImage {
+        
+        // Render view to an image
+        UIGraphicsBeginImageContext(self.view.frame.size)
+        view.drawViewHierarchyInRect(self.view.frame,
+                                     afterScreenUpdates: true)
+        let image : UIImage =
+            UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return image
     }
 }
