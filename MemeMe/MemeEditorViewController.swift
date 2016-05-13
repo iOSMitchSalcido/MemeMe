@@ -30,9 +30,8 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     var cameraBbi: UIBarButtonItem!
     var albumBbi: UIBarButtonItem!
 
-    // navbar bbi, share meme, preview Meme
+    // navbar bbi, share meme
     var shareMemeBbi: UIBarButtonItem!
-    var previewMeme: UIBarButtonItem!
     
     //MARK: View lifecycle
     override func viewDidLoad() {
@@ -64,7 +63,6 @@ UINavigationControllerDelegate, UITextFieldDelegate {
                                        action: #selector(MemeEditorViewController.shareMemeBbiPressed(_:)))
         self.navigationItem.leftBarButtonItem = shareMemeBbi
         
-        // preview meme bbi on right navbar
         // textFields
         topTextField.delegate = self
         bottomTextField.delegate = self
@@ -79,10 +77,12 @@ UINavigationControllerDelegate, UITextFieldDelegate {
             
             topTextField.hidden = false
             bottomTextField.hidden = false
+            shareMemeBbi.enabled = true
         }
         else {
             topTextField.hidden = true
             bottomTextField.hidden = true
+            shareMemeBbi.enabled = false
         }
         
         // begin keyboard notifications..used to shift bottom keybboard up when editing
@@ -157,7 +157,21 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     //MARK: BBI Action functions
     // shareMeme bbi pressed
     func shareMemeBbiPressed(sender: UIBarButtonItem) {
-        print("shareMemeBbiPressed")
+        
+        let image = screenShot()
+        let vc = UIActivityViewController(activityItems: ["My Image", image], applicationActivities: nil)
+        vc.completionWithItemsHandler = {(activityType: String?, completed: Bool,
+            returnedItems: [AnyObject]?, error: NSError?) -> Void in
+            
+            if completed {
+                print("share completed")
+            }
+            else {
+                print("share NOT compelted")
+            }
+        }
+        
+        presentViewController(vc, animated: true, completion: nil)
     }
     
     // function to create/invoke UIImagePickerViewController
@@ -177,7 +191,7 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         presentViewController(imagePickerController, animated: true, completion: nil)
     }
     
-    //MARK: ImagePicker Delegate functions
+    //MARK: UIImagePicker Delegate functions
     // imagePickerController delegate function
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         
