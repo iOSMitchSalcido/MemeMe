@@ -102,8 +102,8 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         // config textFields
         topTextField.delegate = self
         bottomTextField.delegate = self
-        topTextField.defaultTextAttributes = memeTextAttributes(textAttribIndex)
-        bottomTextField.defaultTextAttributes = memeTextAttributes(textAttribIndex)
+        topTextField.defaultTextAttributes = memeTextAttribArray[textAttribIndex]
+        bottomTextField.defaultTextAttributes = memeTextAttribArray[textAttribIndex]
         topTextField.textAlignment = .Center
         bottomTextField.textAlignment = .Center
     }
@@ -124,8 +124,8 @@ UINavigationControllerDelegate, UITextFieldDelegate {
             editButtonItem().enabled = true
         }
         else {
-            //topTextField.hidden = true
-            //bottomTextField.hidden = true
+            topTextField.hidden = true
+            bottomTextField.hidden = true
             shareMemeBbi.enabled = false
             editButtonItem().enabled = false
         }
@@ -337,42 +337,34 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     // configure toolbar/navbar for when editing Meme
     func configureToolbar(editing: Bool) {
         
+        // used for spacing on toolbar
         let flexBbi = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace,
                                       target: nil,
                                       action: nil)
         
+        // items array. bbi's will be added
         var items: [UIBarButtonItem]!
         if editing {
             
+            // editing meme
+            // disable shareBbi, and create toolbar items with a Font bbi for cycling thru fonts
             shareMemeBbi.enabled = false
             
             let editFontBbi = UIBarButtonItem(title: "Font",
                                               style: .Plain,
                                               target: self,
                                               action: #selector(MemeEditorViewController.fontBbiPressed(_:)))
-            
             items = [flexBbi, editFontBbi, flexBbi]
             
         }
         else {
             
+            // not editing. Enable share bbi and update toolbar items with camera and album bbi
             shareMemeBbi.enabled = true
             items = [flexBbi, cameraBbi, flexBbi, albumBbi, flexBbi]
         }
         
+        // update toolbar
         self.setToolbarItems(items, animated: true)
-    }
-    
-    // return a dictionary of textAttribs
-    func memeTextAttributes(index: Int) -> [String: AnyObject] {
-        
-        let textAttributes = [
-            NSStrokeColorAttributeName : UIColor.blackColor(),
-            NSForegroundColorAttributeName : UIColor.whiteColor(),
-            NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
-            NSStrokeWidthAttributeName : -2.0,
-            ]
-        
-        return textAttributes
     }
 }
