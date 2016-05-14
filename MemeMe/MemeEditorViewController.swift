@@ -26,9 +26,10 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
     
-    // toolbar items, camera and album bbi's
+    // toolbar items, camera, album, and editFont bbi's
     var cameraBbi: UIBarButtonItem!
     var albumBbi: UIBarButtonItem!
+    var editFontBbi: UIBarButtonItem!
     
     // navbar bbi, share meme
     var shareMemeBbi: UIBarButtonItem!
@@ -58,6 +59,16 @@ UINavigationControllerDelegate, UITextFieldDelegate {
                                    style: .Plain,
                                    target: self,
                                    action: #selector(MemeEditorViewController.pickAnImage(_:)))
+        editFontBbi = UIBarButtonItem(title: "Font",
+                                      style: .Plain,
+                                      target: self,
+                                      action: #selector(MemeEditorViewController.fontBbiPressed(_:)))
+        
+        // flex bbi for spacing
+        let flexBbi = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
+        
+        // set toolbar
+        toolbarItems = [flexBbi, cameraBbi, flexBbi, albumBbi, flexBbi, editFontBbi, flexBbi]
         
         // enable bbi's based on availability on device that app being run on
         cameraBbi.enabled = UIImagePickerController.isSourceTypeAvailable(.Camera)
@@ -68,9 +79,6 @@ UINavigationControllerDelegate, UITextFieldDelegate {
                                        target: self,
                                        action: #selector(MemeEditorViewController.shareMemeBbiPressed(_:)))
         self.navigationItem.leftBarButtonItem = shareMemeBbi
-        
-        // add edit button to right navbar
-        self.navigationItem.rightBarButtonItem = editButtonItem()
 
         // add a few fonts to memeTextAttribArray for user selection when editing meme
         let impactTextAttributes = [
@@ -115,22 +123,22 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         super.viewWillAppear(animated)
         
         // configure toolbar
-        configureToolbar(false)
+        // configureToolbar(false)
         
         // show top/bottom textFields only if an image is visible
-        // enable shareMeme and Preview Meme only if image is visible
+        // enable shareMeme and Preview Meme, Font, only if image is visible
         if photoImage != nil {
             
             topTextField.hidden = false
             bottomTextField.hidden = false
             shareMemeBbi.enabled = true
-            editButtonItem().enabled = true
+            editFontBbi.enabled = true
         }
         else {
             topTextField.hidden = true
             bottomTextField.hidden = true
             shareMemeBbi.enabled = false
-            editButtonItem().enabled = false
+            editFontBbi.enabled = false
         }
         
         // begin keyboard notifications..used to shift bottom keybboard up when editing
@@ -142,25 +150,6 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         
         // stop keyboard notifications while view not visible
         stopKeyboardNotifications()
-    }
-    
-    override func setEditing(editing: Bool, animated: Bool) {
-        super.setEditing(editing, animated: animated)
-        
-        // configure toolbar/navbar for editing state
-        configureToolbar(editing)
-        
-        // disable textfields if editing, dim image
-        if editing {
-            topTextField.userInteractionEnabled = false
-            bottomTextField.userInteractionEnabled = false
-            imageView.alpha = 0.5
-        }
-        else {
-            topTextField.userInteractionEnabled = true
-            bottomTextField.userInteractionEnabled = true
-            imageView.alpha = 1.0
-        }
     }
     
     //MARK: Keyboard notification functions
@@ -234,7 +223,7 @@ UINavigationControllerDelegate, UITextFieldDelegate {
             returnedItems: [AnyObject]?, error: NSError?) -> Void in
             
             if completed {
-                // Meme share was completed successfully, same Meme
+                // Meme share was completed successfully, save Meme
                 self.meme = Meme(topText: self.topTextField.text,
                                  bottomText: self.bottomTextField.text,
                                  originalImage: self.imageView.image,
@@ -366,39 +355,5 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         bottomTextField.borderStyle = .RoundedRect
         
         return image
-    }
-    
-    // configure toolbar/navbar for when editing Meme
-    func configureToolbar(editing: Bool) {
-        
-        // used for spacing on toolbar
-        let flexBbi = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace,
-                                      target: nil,
-                                      action: nil)
-        
-        // items array. bbi's will be added
-        var items: [UIBarButtonItem]!
-        if editing {
-            
-            // editing meme
-            // disable shareBbi, and create toolbar items with a Font bbi for cycling thru fonts
-            shareMemeBbi.enabled = false
-            
-            let editFontBbi = UIBarButtonItem(title: "Font",
-                                              style: .Plain,
-                                              target: self,
-                                              action: #selector(MemeEditorViewController.fontBbiPressed(_:)))
-            items = [flexBbi, editFontBbi, flexBbi]
-            
-        }
-        else {
-            
-            // not editing. Enable share bbi and update toolbar items with camera and album bbi
-            shareMemeBbi.enabled = true
-            items = [flexBbi, cameraBbi, flexBbi, albumBbi, flexBbi]
-        }
-        
-        // update toolbar
-        self.setToolbarItems(items, animated: true)
     }
 }
