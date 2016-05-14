@@ -303,6 +303,10 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         
         // dim image when editing text
         imageView.alpha = 0.5
+        
+        // disable edit/share buttons when editing text
+        editButtonItem().enabled = false
+        shareMemeBbi.enabled = false
     }
     
     // TextField delegate function
@@ -310,6 +314,10 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         
         // un-dim image when done editing text
         imageView.alpha = 1.0
+        
+        // enable edit/share button when not editing text
+        editButtonItem().enabled = true
+        shareMemeBbi.enabled = true
     }
     
     // textField delegate function
