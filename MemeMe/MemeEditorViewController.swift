@@ -69,6 +69,18 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         // textFields
         topTextField.delegate = self
         bottomTextField.delegate = self
+        
+        // attribs for textFields
+        let textAttributes = [
+            NSStrokeColorAttributeName : UIColor.blackColor(),
+            NSForegroundColorAttributeName : UIColor.whiteColor(),
+            NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
+            NSStrokeWidthAttributeName : -2.0,
+        ]
+        topTextField.defaultTextAttributes = textAttributes
+        bottomTextField.defaultTextAttributes = textAttributes
+        topTextField.textAlignment = .Center
+        bottomTextField.textAlignment = .Center
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -83,8 +95,8 @@ UINavigationControllerDelegate, UITextFieldDelegate {
             shareMemeBbi.enabled = true
         }
         else {
-            topTextField.hidden = true
-            bottomTextField.hidden = true
+            //topTextField.hidden = true
+            //bottomTextField.hidden = true
             shareMemeBbi.enabled = false
         }
         
@@ -195,6 +207,7 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         
         // set delegate and present
         imagePickerController.delegate = self
+        imagePickerController.allowsEditing = true
         presentViewController(imagePickerController, animated: true, completion: nil)
     }
     
@@ -211,8 +224,12 @@ UINavigationControllerDelegate, UITextFieldDelegate {
                                didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
         // imagePicker has selected an image, get image and show in imageView
-        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            self.imageView.image = image
+        // ..save edited image if available
+        if let editedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
+            imageView.image = editedImage
+        }
+        else if let originalImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            imageView.image = originalImage
         }
         
         dismissViewControllerAnimated(true, completion: nil)
