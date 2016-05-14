@@ -36,6 +36,9 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     // Meme, saved after Meme is shared
     var meme: Meme?
     
+    // image picked from camer/album
+    var photoImage: UIImage?
+    
     // track which text style in in text field, used to edit textField font
     var textAttribIndex: Int = 0
     var memeTextAttribArray = [[String:AnyObject]]()
@@ -116,7 +119,7 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         
         // show top/bottom textFields only if an image is visible
         // enable shareMeme and Preview Meme only if image is visible
-        if imageView.image != nil {
+        if photoImage != nil {
             
             topTextField.hidden = false
             bottomTextField.hidden = false
@@ -289,9 +292,11 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         // ..save edited image if available
         if let editedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
             imageView.image = editedImage
+            photoImage = imageView.image
         }
         else if let originalImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             imageView.image = originalImage
+            photoImage = imageView.image
         }
         
         dismissViewControllerAnimated(true, completion: nil)
