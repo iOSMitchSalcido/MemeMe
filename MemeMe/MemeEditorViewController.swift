@@ -29,12 +29,16 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     // toolbar items, camera and album bbi's
     var cameraBbi: UIBarButtonItem!
     var albumBbi: UIBarButtonItem!
-
+    
     // navbar bbi, share meme
     var shareMemeBbi: UIBarButtonItem!
     
     // Meme, saved after Meme is shared
     var meme: Meme?
+    
+    // track which text style in in text field, used to edit textField font
+    var textAttribIndex: Int = 0
+    var memeTextAttribArray = [[String:AnyObject]]()
     
     //MARK: View lifecycle
     override func viewDidLoad() {
@@ -51,14 +55,10 @@ UINavigationControllerDelegate, UITextFieldDelegate {
                                    style: .Plain,
                                    target: self,
                                    action: #selector(MemeEditorViewController.pickAnImage(_:)))
-        let flexBbi = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
         
         // enable bbi's based on availability on device that app being run on
         cameraBbi.enabled = UIImagePickerController.isSourceTypeAvailable(.Camera)
         albumBbi.enabled = UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary)
-        
-        // add bbi's to toolbar
-        toolbarItems = [flexBbi, cameraBbi, flexBbi, albumBbi, flexBbi]
         
         // share meme bbi on left navbar
         shareMemeBbi = UIBarButtonItem(barButtonSystemItem: .Action,
@@ -66,25 +66,53 @@ UINavigationControllerDelegate, UITextFieldDelegate {
                                        action: #selector(MemeEditorViewController.shareMemeBbiPressed(_:)))
         self.navigationItem.leftBarButtonItem = shareMemeBbi
         
-        // textFields
-        topTextField.delegate = self
-        bottomTextField.delegate = self
-        
-        // attribs for textFields
-        let textAttributes = [
+        // add edit button to right navbar
+        self.navigationItem.rightBarButtonItem = editButtonItem()
+
+        // add a few fonts to memeTextAttribArray for user selection when editing meme
+        let impactTextAttributes = [
             NSStrokeColorAttributeName : UIColor.blackColor(),
             NSForegroundColorAttributeName : UIColor.whiteColor(),
             NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
             NSStrokeWidthAttributeName : -2.0,
-        ]
-        topTextField.defaultTextAttributes = textAttributes
-        bottomTextField.defaultTextAttributes = textAttributes
+            ]
+        let textAttributes1 = [
+            NSStrokeColorAttributeName : UIColor.redColor(),
+            NSForegroundColorAttributeName : UIColor.greenColor(),
+            NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
+            NSStrokeWidthAttributeName : -2.0,
+            ]
+        let textAttributes2 = [
+            NSStrokeColorAttributeName : UIColor.blueColor(),
+            NSForegroundColorAttributeName : UIColor.blackColor(),
+            NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
+            NSStrokeWidthAttributeName : -2.0,
+            ]
+        let textAttributes3 = [
+            NSStrokeColorAttributeName : UIColor.blackColor(),
+            NSForegroundColorAttributeName : UIColor.whiteColor(),
+            NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
+            NSStrokeWidthAttributeName : 3.0,
+            ]
+        memeTextAttribArray.append(impactTextAttributes)
+        memeTextAttribArray.append(textAttributes1)
+        memeTextAttribArray.append(textAttributes2)
+        memeTextAttribArray.append(textAttributes3)
+        
+        // config textFields
+        topTextField.delegate = self
+        bottomTextField.delegate = self
+        topTextField.defaultTextAttributes = memeTextAttribArray[textAttribIndex]
+        bottomTextField.defaultTextAttributes = memeTextAttribArray[textAttribIndex]
         topTextField.textAlignment = .Center
         bottomTextField.textAlignment = .Center
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        // configure toolbar
+        configureToolbar(false)
         
         // show top/bottom textFields only if an image is visible
         // enable shareMeme and Preview Meme only if image is visible
@@ -93,11 +121,13 @@ UINavigationControllerDelegate, UITextFieldDelegate {
             topTextField.hidden = false
             bottomTextField.hidden = false
             shareMemeBbi.enabled = true
+            editButtonItem().enabled = true
         }
         else {
-            //topTextField.hidden = true
-            //bottomTextField.hidden = true
+            topTextField.hidden = true
+            bottomTextField.hidden = true
             shareMemeBbi.enabled = false
+            editButtonItem().enabled = false
         }
         
         // begin keyboard notifications..used to shift bottom keybboard up when editing
@@ -109,6 +139,12 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         
         // stop keyboard notifications while view not visible
         stopKeyboardNotifications()
+    }
+    
+    override func setEditing(editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        
+        configureToolbar(editing)
     }
     
     //MARK: Keyboard notification functions
@@ -211,6 +247,19 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         presentViewController(imagePickerController, animated: true, completion: nil)
     }
     
+    // function to change font in textFields
+    func fontBbiPressed(sender: UIBarButtonItem) {
+        
+        textAttribIndex += 1
+        if textAttribIndex >= memeTextAttribArray.count {
+            textAttribIndex = 0
+        }
+        topTextField.defaultTextAttributes = memeTextAttribArray[textAttribIndex]
+        bottomTextField.defaultTextAttributes = memeTextAttribArray[textAttribIndex]
+        topTextField.textAlignment = .Center
+        bottomTextField.textAlignment = .Center
+    }
+    
     //MARK: UIImagePicker Delegate functions
     // imagePickerController delegate function
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
@@ -283,5 +332,39 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         UIGraphicsEndImageContext()
         
         return image
+    }
+    
+    // configure toolbar/navbar for when editing Meme
+    func configureToolbar(editing: Bool) {
+        
+        // used for spacing on toolbar
+        let flexBbi = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace,
+                                      target: nil,
+                                      action: nil)
+        
+        // items array. bbi's will be added
+        var items: [UIBarButtonItem]!
+        if editing {
+            
+            // editing meme
+            // disable shareBbi, and create toolbar items with a Font bbi for cycling thru fonts
+            shareMemeBbi.enabled = false
+            
+            let editFontBbi = UIBarButtonItem(title: "Font",
+                                              style: .Plain,
+                                              target: self,
+                                              action: #selector(MemeEditorViewController.fontBbiPressed(_:)))
+            items = [flexBbi, editFontBbi, flexBbi]
+            
+        }
+        else {
+            
+            // not editing. Enable share bbi and update toolbar items with camera and album bbi
+            shareMemeBbi.enabled = true
+            items = [flexBbi, cameraBbi, flexBbi, albumBbi, flexBbi]
+        }
+        
+        // update toolbar
+        self.setToolbarItems(items, animated: true)
     }
 }
