@@ -33,6 +33,9 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     // navbar bbi, share meme
     var shareMemeBbi: UIBarButtonItem!
     
+    // Meme, saved after Meme is shared
+    var meme: Meme?
+    
     //MARK: View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,7 +53,7 @@ UINavigationControllerDelegate, UITextFieldDelegate {
                                    action: #selector(MemeEditorViewController.pickAnImage(_:)))
         let flexBbi = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
         
-        // enable bbi's based on availability on device app being run on
+        // enable bbi's based on availability on device that app being run on
         cameraBbi.enabled = UIImagePickerController.isSourceTypeAvailable(.Camera)
         albumBbi.enabled = UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary)
         
@@ -158,16 +161,20 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     // shareMeme bbi pressed
     func shareMemeBbiPressed(sender: UIBarButtonItem) {
         
-        let image = screenShot()
-        let vc = UIActivityViewController(activityItems: ["My Image", image], applicationActivities: nil)
+        // take a screen shot, use as item in ActivityViewController
+        let memedImage = screenShot()
+        let vc = UIActivityViewController(activityItems: ["Check out my Meme !", memedImage], applicationActivities: nil)
+        
+        // completion for ActivityViewController. Save meme if successful share
         vc.completionWithItemsHandler = {(activityType: String?, completed: Bool,
             returnedItems: [AnyObject]?, error: NSError?) -> Void in
             
             if completed {
-                print("share completed")
-            }
-            else {
-                print("share NOT compelted")
+                // Meme share was completed successfully, same Meme
+                self.meme = Meme(topText: self.topTextField.text,
+                                 bottomText: self.bottomTextField.text,
+                                 originalImage: self.imageView.image,
+                                 memedImage: memedImage)
             }
         }
         
