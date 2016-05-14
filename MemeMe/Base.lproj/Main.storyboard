@@ -6,7 +6,7 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Meme Editor View Controller-->
+        <!--MemeMe !-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="MemeEditorViewController" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
@@ -53,7 +53,7 @@
                             <outletCollection property="gestureRecognizers" destination="tri-o7-eo9" appends="YES" id="doT-bx-XAz"/>
                         </connections>
                     </view>
-                    <navigationItem key="navigationItem" id="3qc-t3-mDy"/>
+                    <navigationItem key="navigationItem" title="MemeMe !" id="3qc-t3-mDy"/>
                     <connections>
                         <outlet property="bottomTextField" destination="bY1-sF-sgd" id="FQO-dc-03H"/>
                         <outlet property="imageView" destination="fsW-QY-ywi" id="ozB-te-iXJ"/>

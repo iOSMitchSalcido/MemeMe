@@ -144,7 +144,20 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     override func setEditing(editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         
+        // configure toolbar/navbar for editing state
         configureToolbar(editing)
+        
+        // disable textfields if editing, dim image
+        if editing {
+            topTextField.userInteractionEnabled = false
+            bottomTextField.userInteractionEnabled = false
+            imageView.alpha = 0.5
+        }
+        else {
+            topTextField.userInteractionEnabled = true
+            bottomTextField.userInteractionEnabled = true
+            imageView.alpha = 1.0
+        }
     }
     
     //MARK: Keyboard notification functions
