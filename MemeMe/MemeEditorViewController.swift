@@ -40,9 +40,14 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     // image picked from camer/album
     var photoImage: UIImage?
     
-    // track which text style in in text field, used to edit textField font
-    var textAttribIndex: Int = 0
+    // array of fonts. For user customization.
+    // font's are added in viewDidLoad. When user presses "Font" bbi, fonts
+    // are cycled thru
     var memeTextAttribArray = [[String:AnyObject]]()
+
+    // index to track which font is in textFields. Is incremented when user presses Font bbi
+    // upper limit is count of memeTextAttribArray, then it's set back to 0
+    var textAttribIndex: Int = 0
     
     //MARK: View lifecycle
     override func viewDidLoad() {
