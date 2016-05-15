@@ -127,9 +127,6 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        // configure toolbar
-        // configureToolbar(false)
-        
         // show top/bottom textFields only if an image is visible
         // enable shareMeme and Preview Meme, Font, only if image is visible
         if photoImage != nil {
@@ -303,8 +300,7 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         // dim image when editing text
         imageView.alpha = 0.5
         
-        // disable edit/share buttons when editing text
-        editButtonItem().enabled = false
+        // disable share when editing text
         shareMemeBbi.enabled = false
     }
     
@@ -314,8 +310,7 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         // un-dim image when done editing text
         imageView.alpha = 1.0
         
-        // enable edit/share button when not editing text
-        editButtonItem().enabled = true
+        // enable share button when not editing text
         shareMemeBbi.enabled = true
     }
     
