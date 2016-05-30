@@ -85,6 +85,11 @@ UINavigationControllerDelegate, UITextFieldDelegate {
                                        action: #selector(MemeEditorViewController.shareMemeBbiPressed(_:)))
         self.navigationItem.leftBarButtonItem = shareMemeBbi
 
+        // cancel meme creation bbi on right navbar
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel,
+                                                            target: self,
+                                                            action: #selector(MemeEditorViewController.cancelBbiPressed(_:)))
+        
         // add a few fonts to memeTextAttribArray for user selection when editing meme
         let impactTextAttributes = [
             NSStrokeColorAttributeName : UIColor.blackColor(),
@@ -367,5 +372,11 @@ UINavigationControllerDelegate, UITextFieldDelegate {
             let appDelegate  = UIApplication.sharedApplication().delegate as! AppDelegate
             appDelegate.memes.append(meme)
         }
+    }
+    
+    // cancel/dismiss meme creation
+    func cancelBbiPressed(sender: UIBarButtonItem) {
+        
+        dismissViewControllerAnimated(true, completion: nil)
     }
 }
