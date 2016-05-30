@@ -230,6 +230,9 @@ UINavigationControllerDelegate, UITextFieldDelegate {
                                  bottomText: self.bottomTextField.text,
                                  originalImage: self.imageView.image,
                                  memedImage: memedImage)
+                
+                // save meme
+                self.saveMeme()
             }
         }
         
@@ -355,5 +358,14 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         bottomTextField.borderStyle = .RoundedRect
         
         return image
+    }
+    
+    // save Meme in Shared model defined in AppDelegate
+    func saveMeme() {
+        
+        if let meme = self.meme {
+            let appDelegate  = UIApplication.sharedApplication().delegate as! AppDelegate
+            appDelegate.memes.append(meme)
+        }
     }
 }
