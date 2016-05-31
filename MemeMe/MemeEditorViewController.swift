@@ -238,6 +238,9 @@ UINavigationControllerDelegate, UITextFieldDelegate {
                 
                 // save meme
                 self.saveMeme()
+                
+                // dismiss
+                self.cancelBbiPressed(nil)
             }
         }
         
@@ -369,13 +372,16 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     func saveMeme() {
         
         if let meme = self.meme {
+            print("saving")
             let appDelegate  = UIApplication.sharedApplication().delegate as! AppDelegate
             appDelegate.memes.append(meme)
+            let count = appDelegate.memes.count
+            print("countxx: \(count)")
         }
     }
     
     // cancel/dismiss meme creation
-    func cancelBbiPressed(sender: UIBarButtonItem) {
+    func cancelBbiPressed(sender: UIBarButtonItem?) {
         
         dismissViewControllerAnimated(true, completion: nil)
     }

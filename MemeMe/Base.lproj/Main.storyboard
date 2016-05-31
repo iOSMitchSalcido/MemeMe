@@ -50,11 +50,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pickMeme" translatesAutoresizingMaskIntoConstraints="NO" id="fsW-QY-ywi">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="pickMeme" translatesAutoresizingMaskIntoConstraints="NO" id="fsW-QY-ywi">
                                 <rect key="frame" x="20" y="64" width="560" height="536"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="TOP" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="H8s-NA-KUT">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="TOP" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="H8s-NA-KUT">
                                 <rect key="frame" x="20" y="84" width="560" height="30"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="45"/>
@@ -101,7 +101,7 @@
             </objects>
             <point key="canvasLocation" x="1846" y="1089"/>
         </scene>
-        <!--Root View Controller-->
+        <!--Shared Memes-->
         <scene sceneID="fhT-KA-dlI">
             <objects>
                 <tableViewController storyboardIdentifier="SharedMemesTableViewController" id="2JJ-bJ-yKg" customClass="SharedMemesTableViewController" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
@@ -110,12 +110,28 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SharedMemeTableViewCellID" id="sOC-jx-AfU">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SharedMemeTableViewCellID" textLabel="aPc-zd-Pwg" detailTextLabel="lbZ-D3-0ZY" style="IBUITableViewCellStyleSubtitle" id="sOC-jx-AfU">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sOC-jx-AfU" id="BFC-fr-hm6">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="aPc-zd-Pwg">
+                                            <rect key="frame" x="15" y="6" width="31.5" height="19.5"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lbZ-D3-0ZY">
+                                            <rect key="frame" x="15" y="25.5" width="40.5" height="13.5"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
@@ -124,13 +140,13 @@
                             <outlet property="delegate" destination="2JJ-bJ-yKg" id="Pn4-0z-xPN"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="rfq-Bt-NsG"/>
+                    <navigationItem key="navigationItem" title="Shared Memes" id="rfq-Bt-NsG"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VFb-h0-YLG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1894" y="1905"/>
         </scene>
-        <!--Collection View Controller-->
+        <!--Shared Memes-->
         <scene sceneID="Qfl-rD-Bnm">
             <objects>
                 <collectionViewController id="I6H-pd-n1A" sceneMemberID="viewController">
@@ -159,7 +175,7 @@
                             <outlet property="delegate" destination="I6H-pd-n1A" id="jeE-db-fK0"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" id="3Ia-zB-Lyh"/>
+                    <navigationItem key="navigationItem" title="Shared Memes" id="3Ia-zB-Lyh"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aL6-Wg-O42" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

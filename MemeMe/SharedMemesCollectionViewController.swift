@@ -12,21 +12,20 @@ private let reuseIdentifier = "Cell"
 
 class SharedMemesCollectionViewController: UICollectionViewController {
 
+    // ref to shared memes
+    var memes: [Meme]!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Register cell classes
-        self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
+        // get shared memes
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        memes = appDelegate.memes
+        
+        // create new Meme bbi
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add,
+                                                            target: self,
+                                                            action: #selector(SharedMemesTableViewController.newMemeBbiPressed(_:)))
     }
 
     /*
@@ -91,4 +90,20 @@ class SharedMemesCollectionViewController: UICollectionViewController {
     }
     */
 
+    // MARK: - Launch Meme Editor
+    func newMemeBbiPressed(sender: UIBarButtonItem?) {
+        
+        // create MemeEditor embedded in navController
+        let vc = storyboard?.instantiateViewControllerWithIdentifier("MemeEditorViewController") as! MemeEditorViewController
+        let nc = UINavigationController(rootViewController: vc)
+        
+        // animate presentation if invocation of this function was a result of newMemeBbi pressed "+"
+        if let _ = sender {
+            presentViewController(nc, animated: true, completion: nil)
+        }
+        else {
+            // invocation as a result of no saved memes in viewDidLoad
+            presentViewController(nc, animated: false, completion: nil)
+        }
+    }
 }

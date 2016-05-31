@@ -5,98 +5,97 @@
 //  Created by Online Training on 5/30/16.
 //  Copyright © 2016 Mitch Salcido. All rights reserved.
 //
+/*
+ About SharedMemesTableViewController.swift:
+ 
+ VC provides functionality to present shared Memes in a tableView. Cells can be selected which prompts
+ a detail meme view using MemeViewController
+ */
 
 import UIKit
 
 class SharedMemesTableViewController: UITableViewController {
 
-    var memes: [Meme]!
+    // ref to shared memes
+    var memes: [Meme] {
+        get {
+            // get shared memes
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            return appDelegate.memes
+        }
+    }
     
+    //MARK: View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // get shared memes
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        memes = appDelegate.memes
         
         // create new Meme bbi
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add,
                                                             target: self,
                                                             action: #selector(SharedMemesTableViewController.newMemeBbiPressed(_:)))
+        
+        // launch MemeEditorVC if no shared memes
+        if memes.count == 0 {
+            newMemeBbiPressed(nil)
+        }
     }
 
-    // MARK: - Table view data source
-
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // show tabBar, reload table
+        self.tabBarController?.tabBar.hidden = false
+        tableView.reloadData()
     }
-
+    
+    // MARK: - Table view data source functions
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        
+        return memes.count
     }
 
-    /*
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
+    override func tableView(tableView: UITableView,
+                            cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("SharedMemeTableViewCellID",
+                                                               forIndexPath: indexPath)
 
-        // Configure the cell...
-
+        let meme = memes[indexPath.row]
+        cell.textLabel?.text = meme.topText
+        cell.detailTextLabel?.text = meme.bottomText
+        cell.imageView?.image = meme.memedImage
+        
         return cell
     }
-    */
 
-    /*
-    // Override to support conditional editing of the table view.
+    // MARK: - Table view delegate functions
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        let meme = memes[indexPath.row]
+        let vc = storyboard?.instantiateViewControllerWithIdentifier("MemeViewController") as! MemeViewController
+        vc.meme = meme
+        self.tabBarController?.tabBar.hidden = true
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
         return true
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
     // MARK: - Launch Meme Editor
-    func newMemeBbiPressed(sender: UIBarButtonItem) {
+    func newMemeBbiPressed(sender: UIBarButtonItem?) {
         
+        // create MemeEditor embedded in navController
         let vc = storyboard?.instantiateViewControllerWithIdentifier("MemeEditorViewController") as! MemeEditorViewController
         let nc = UINavigationController(rootViewController: vc)
-        presentViewController(nc, animated: true, completion: nil)
+        
+        // animate presentation if invocation of this function was a result of newMemeBbi pressed "+"
+        if let _ = sender {
+            presentViewController(nc, animated: true, completion: nil)
+        }
+        else {
+            // invocation as a result of no saved memes in viewDidLoad (e.g. initial app launch)
+            presentViewController(nc, animated: false, completion: nil)
+        }
     }
 }
