@@ -375,8 +375,6 @@ UINavigationControllerDelegate, UITextFieldDelegate {
             print("saving")
             let appDelegate  = UIApplication.sharedApplication().delegate as! AppDelegate
             appDelegate.memes.append(meme)
-            let count = appDelegate.memes.count
-            print("countxx: \(count)")
         }
     }
     
