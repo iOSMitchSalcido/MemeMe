@@ -53,15 +53,18 @@ class SharedMemesTableViewController: UITableViewController {
     // MARK: - Table view data source functions
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
+        // count of Memes
         return appDelegate.memes.count
     }
 
     override func tableView(tableView: UITableView,
                             cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
+        // get a cell
         let cell = tableView.dequeueReusableCellWithIdentifier("SharedMemeTableViewCellID",
                                                                forIndexPath: indexPath)
 
+        // retrieve Meme from shared store, set image and text
         let meme = appDelegate.memes[indexPath.row]
         cell.textLabel?.text = meme.topText
         cell.detailTextLabel?.text = meme.bottomText
@@ -73,14 +76,18 @@ class SharedMemesTableViewController: UITableViewController {
     // MARK: - Table view delegate functions
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
+        // cell selected. Navigate to MemeVC
         let meme = appDelegate.memes[indexPath.row]
         let vc = storyboard?.instantiateViewControllerWithIdentifier("MemeViewController") as! MemeViewController
         vc.meme = meme
+        
+        // hide tab, push VC
         self.tabBarController?.tabBar.hidden = true
         navigationController?.pushViewController(vc, animated: true)
     }
     
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        // OK to edit cell
         return true
     }
 
@@ -98,9 +105,11 @@ class SharedMemesTableViewController: UITableViewController {
         
         if editingStyle == .Delete {
             
+            // delete meme and remove cell
             appDelegate.memes.removeAtIndex(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
             
+            // if no memes, remove from editing
             if appDelegate.memes.count == 0 {
                 
                 setEditing(false, animated: true)
