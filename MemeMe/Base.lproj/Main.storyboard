@@ -121,14 +121,14 @@
                                             <rect key="frame" x="15" y="6" width="31.5" height="19.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lbZ-D3-0ZY">
                                             <rect key="frame" x="15" y="25.5" width="40.5" height="13.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -149,7 +149,7 @@
         <!--Shared Memes-->
         <scene sceneID="Qfl-rD-Bnm">
             <objects>
-                <collectionViewController id="I6H-pd-n1A" sceneMemberID="viewController">
+                <collectionViewController id="I6H-pd-n1A" customClass="SharedMemesCollectionViewController" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="cX1-R9-2Lc">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -160,14 +160,28 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SharedMemesCollectionViewCellID" id="MMx-Hr-rgj">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SharedMemesCollectionViewCellID" id="MMx-Hr-rgj" customClass="SharedMemesCollectionViewCell" customModule="MemeMe" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="64" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="79t-5j-nCw">
+                                            <rect key="frame" x="8" y="8" width="34" height="34"/>
+                                        </imageView>
+                                    </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
+                                <constraints>
+                                    <constraint firstAttribute="bottomMargin" secondItem="79t-5j-nCw" secondAttribute="bottom" id="7CP-vT-guC"/>
+                                    <constraint firstItem="79t-5j-nCw" firstAttribute="top" secondItem="MMx-Hr-rgj" secondAttribute="topMargin" id="DLn-zf-6Ob"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="79t-5j-nCw" secondAttribute="trailing" id="DMu-JZ-Nab"/>
+                                    <constraint firstItem="79t-5j-nCw" firstAttribute="leading" secondItem="MMx-Hr-rgj" secondAttribute="leadingMargin" id="dU0-2C-2Vw"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="imageView" destination="79t-5j-nCw" id="asQ-gc-RXa"/>
+                                </connections>
                             </collectionViewCell>
                         </cells>
                         <connections>

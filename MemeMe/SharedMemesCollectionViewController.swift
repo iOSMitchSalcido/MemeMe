@@ -5,16 +5,21 @@
 //  Created by Online Training on 5/30/16.
 //  Copyright © 2016 Mitch Salcido. All rights reserved.
 //
+/*
+ About SharedMemesCollectionViewController.swift:
+ 
+ VC provides functionality to present shared Memes in a collectionView. Cells can be selected which prompts
+ a detail meme view using MemeViewController.
+ */
 
 import UIKit
-
-private let reuseIdentifier = "Cell"
 
 class SharedMemesCollectionViewController: UICollectionViewController {
 
     // ref to app delegate
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
+    // MARK: View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -24,39 +29,44 @@ class SharedMemesCollectionViewController: UICollectionViewController {
                                                             action: #selector(SharedMemesTableViewController.newMemeBbiPressed(_:)))
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // show tabBar, reload table
+        self.tabBarController?.tabBar.hidden = false
+        
+        collectionView?.reloadData()
     }
-    */
-
-    // MARK: UICollectionViewDataSource
-
-    override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
-
+    
+    // MARK: UICollectionViewDataSource functions
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
-        return 0
+        
+        return appDelegate.memes.count
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
-    
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("SharedMemesCollectionViewCellID",
+                                                                         forIndexPath: indexPath) as! SharedMemesCollectionViewCell
         // Configure the cell
-    
+        let meme = appDelegate.memes[indexPath.row]
+        cell.imageView.image = meme.memedImage
+        
         return cell
     }
 
-    // MARK: UICollectionViewDelegate
-
+    // MARK: UICollectionViewDelegate functions
+    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        // cell selected. Navigate to MemeVC
+        let meme = appDelegate.memes[indexPath.row]
+        let vc = storyboard?.instantiateViewControllerWithIdentifier("MemeViewController") as! MemeViewController
+        vc.meme = meme
+        
+        // hide tab, push VC
+        self.tabBarController?.tabBar.hidden = true
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     /*
     // Uncomment this method to specify if the specified item should be highlighted during tracking
     override func collectionView(collectionView: UICollectionView, shouldHighlightItemAtIndexPath indexPath: NSIndexPath) -> Bool {

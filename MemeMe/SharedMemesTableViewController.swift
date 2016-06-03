@@ -19,7 +19,7 @@ class SharedMemesTableViewController: UITableViewController {
     // ref to app delegate
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 
-    //MARK: View lifecycle
+    // MARK: View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
