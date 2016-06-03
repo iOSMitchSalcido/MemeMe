@@ -12,15 +12,11 @@ private let reuseIdentifier = "Cell"
 
 class SharedMemesCollectionViewController: UICollectionViewController {
 
-    // ref to shared memes
-    var memes: [Meme]!
+    // ref to app delegate
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // get shared memes
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        memes = appDelegate.memes
         
         // create new Meme bbi
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add,
@@ -102,7 +98,7 @@ class SharedMemesCollectionViewController: UICollectionViewController {
             presentViewController(nc, animated: true, completion: nil)
         }
         else {
-            // invocation as a result of no saved memes in viewDidLoad
+            // invocation as a result of no saved memes in viewDidLoad (e.g. initial app launch)
             presentViewController(nc, animated: false, completion: nil)
         }
     }

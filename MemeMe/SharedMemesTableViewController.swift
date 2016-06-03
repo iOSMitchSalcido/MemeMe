@@ -94,11 +94,7 @@ class SharedMemesTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         
         // can move only if more that one meme
-        if appDelegate.memes.count > 1 {
-            return true
-        }
-        
-        return false
+        return appDelegate.memes.count > 1
     }
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -120,6 +116,7 @@ class SharedMemesTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
         
+        // move meme
         let meme = appDelegate.memes.removeAtIndex(sourceIndexPath.row)
         appDelegate.memes.insert(meme, atIndex: destinationIndexPath.row)
     }
