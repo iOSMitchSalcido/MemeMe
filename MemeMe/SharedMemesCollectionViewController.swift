@@ -14,11 +14,13 @@
 
 import UIKit
 
-class SharedMemesCollectionViewController: UICollectionViewController {
+class SharedMemesCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
     // ref to app delegate
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
+    @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
+
     // MARK: View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +40,29 @@ class SharedMemesCollectionViewController: UICollectionViewController {
         collectionView?.reloadData()
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        print("viewWillLayoutSubviews")
+        guard let flowLayout = collectionView!.collectionViewLayout as? UICollectionViewFlowLayout else {
+            return
+        }
+        
+        let width = UIScreen.mainScreen().bounds.width
+        flowLayout.itemSize = CGSize(width: width / 4.0 - 4.0, height: width / 4.0 - 4.0)
+        
+        flowLayout.invalidateLayout()
+        
+        return
+        
+        let space: CGFloat = 1.0
+        let dimension = (self.view.frame.size.width - (2 * space)) / 2.0
+        flowLayout.minimumInteritemSpacing = space
+        flowLayout.minimumLineSpacing = space
+        flowLayout.itemSize = CGSizeMake(dimension, dimension)
+        flowLayout.invalidateLayout()
+    }
+    
     // MARK: UICollectionViewDataSource functions
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
@@ -54,6 +79,12 @@ class SharedMemesCollectionViewController: UICollectionViewController {
         return cell
     }
 
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        
+        let width = UIScreen.mainScreen().bounds.width
+        return CGSize(width: width / 3.0 - 2.0, height: width / 3.0 - 2.0)
+    }
+    
     // MARK: UICollectionViewDelegate functions
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
