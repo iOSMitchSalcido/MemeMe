@@ -21,13 +21,29 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KXg-6O-Whu">
                                 <rect key="frame" x="20" y="20" width="560" height="580"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="adl-Hx-jXY">
+                                <rect key="frame" x="20" y="50" width="560" height="40"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                <state key="normal" title="Delete Meme"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zW4-9b-Nd1">
+                                <rect key="frame" x="20" y="530" width="560" height="40"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                <state key="normal" title="Edit Meme"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="KXg-6O-Whu" firstAttribute="leading" secondItem="qgN-wr-CSp" secondAttribute="leadingMargin" id="8a8-cR-AO6"/>
+                            <constraint firstItem="zW4-9b-Nd1" firstAttribute="leading" secondItem="qgN-wr-CSp" secondAttribute="leadingMargin" id="AXE-0J-lco"/>
+                            <constraint firstItem="adl-Hx-jXY" firstAttribute="trailing" secondItem="qgN-wr-CSp" secondAttribute="trailingMargin" id="KY8-Bh-gds"/>
+                            <constraint firstItem="adl-Hx-jXY" firstAttribute="leading" secondItem="qgN-wr-CSp" secondAttribute="leadingMargin" id="Tk7-aW-N5J"/>
                             <constraint firstItem="KXg-6O-Whu" firstAttribute="top" secondItem="ztp-eM-MXU" secondAttribute="bottom" id="UZ9-KX-ljI"/>
                             <constraint firstItem="wLm-aQ-m9U" firstAttribute="top" secondItem="KXg-6O-Whu" secondAttribute="bottom" id="dqR-Bz-qEb"/>
                             <constraint firstAttribute="trailingMargin" secondItem="KXg-6O-Whu" secondAttribute="trailing" id="fO8-zW-PW6"/>
+                            <constraint firstItem="wLm-aQ-m9U" firstAttribute="top" secondItem="zW4-9b-Nd1" secondAttribute="bottom" constant="30" id="gb7-uI-hOA"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="zW4-9b-Nd1" secondAttribute="trailing" id="kSj-YF-BEl"/>
+                            <constraint firstItem="adl-Hx-jXY" firstAttribute="top" secondItem="ztp-eM-MXU" secondAttribute="bottom" constant="30" id="wdr-Xc-f93"/>
                         </constraints>
                     </view>
                     <connections>
