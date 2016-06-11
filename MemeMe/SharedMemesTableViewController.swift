@@ -43,7 +43,7 @@ class SharedMemesTableViewController: UITableViewController {
         super.viewWillAppear(animated)
         
         // show tabBar, reload table
-        self.tabBarController?.tabBar.hidden = false
+        tabBarController?.tabBar.hidden = false
         tableView.reloadData()
         
         // enable edit bbi only if Memes

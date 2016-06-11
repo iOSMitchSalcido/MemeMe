@@ -14,12 +14,13 @@
 
 import UIKit
 
-class SharedMemesCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class SharedMemesCollectionViewController: UICollectionViewController {
 
+    // constant for number of cells/memes to display in each row in collectionView
+    let CELLS_PER_ROW: CGFloat = 4.0
+    
     // ref to app delegate
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    
-    @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
 
     // MARK: View lifecycle
     override func viewDidLoad() {
@@ -30,103 +31,52 @@ class SharedMemesCollectionViewController: UICollectionViewController, UICollect
                                                             target: self,
                                                             action: #selector(SharedMemesTableViewController.newMemeBbiPressed(_:)))
     }
-
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        // show tabBar, reload table
-        self.tabBarController?.tabBar.hidden = false
-        
+        // show tabBar, reload collectionView
+        tabBarController?.tabBar.hidden = false
         collectionView?.reloadData()
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
-        print("viewWillLayoutSubviews")
+        /*
+         Upon layout, get flowLayout and set size of item...used to maintain same number of cells/row
+         for all device orientations
+         */
+        
+        // get flowLayout
         guard let flowLayout = collectionView!.collectionViewLayout as? UICollectionViewFlowLayout else {
             return
         }
         
-        let width = UIScreen.mainScreen().bounds.width
-        flowLayout.itemSize = CGSize(width: width / 4.0 - 4.0, height: width / 4.0 - 4.0)
-        
-        flowLayout.invalidateLayout()
-        
-        return
-        
-        let space: CGFloat = 1.0
-        let dimension = (self.view.frame.size.width - (2 * space)) / 2.0
-        flowLayout.minimumInteritemSpacing = space
-        flowLayout.minimumLineSpacing = space
-        flowLayout.itemSize = CGSizeMake(dimension, dimension)
-        flowLayout.invalidateLayout()
+        // get width of screen, divide by cell/row...subtract spacing/inset distance
+        let width = UIScreen.mainScreen().bounds.width / CELLS_PER_ROW - 4.0
+        flowLayout.itemSize = CGSize(width: width, height: width)
     }
     
-    // MARK: UICollectionViewDataSource functions
+    // MARK: - CollectionView DataSource
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
         return appDelegate.memes.count
     }
-
+    
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("SharedMemesCollectionViewCellID",
-                                                                         forIndexPath: indexPath) as! SharedMemesCollectionViewCell
-        // Configure the cell
+        
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CollectionViewCellID", forIndexPath: indexPath) as! SharedMemesCollectionViewCell
+        
         let meme = appDelegate.memes[indexPath.row]
         cell.imageView.image = meme.memedImage
-        
         return cell
     }
 
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        
-        let width = UIScreen.mainScreen().bounds.width
-        return CGSize(width: width / 3.0 - 2.0, height: width / 3.0 - 2.0)
-    }
-    
-    // MARK: UICollectionViewDelegate functions
+    // MARK: - CollectionView Delegate
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        
-        // cell selected. Navigate to MemeVC
-        let meme = appDelegate.memes[indexPath.row]
-        let vc = storyboard?.instantiateViewControllerWithIdentifier("MemeViewController") as! MemeViewController
-        vc.meme = meme
-        
-        // hide tab, push VC
-        self.tabBarController?.tabBar.hidden = true
-        navigationController?.pushViewController(vc, animated: true)
+        print("didSelect")
     }
     
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(collectionView: UICollectionView, shouldHighlightItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(collectionView: UICollectionView, shouldShowMenuForItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(collectionView: UICollectionView, canPerformAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) -> Bool {
-        return false
-    }
-
-    override func collectionView(collectionView: UICollectionView, performAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) {
-    
-    }
-    */
-
     // MARK: - Launch Meme Editor
     func newMemeBbiPressed(sender: UIBarButtonItem?) {
         

@@ -146,52 +146,52 @@
             </objects>
             <point key="canvasLocation" x="1894" y="1905"/>
         </scene>
-        <!--Shared Memes-->
-        <scene sceneID="Qfl-rD-Bnm">
+        <!--Shared Memes Collection View Controller-->
+        <scene sceneID="5TH-WL-ENh">
             <objects>
-                <collectionViewController id="I6H-pd-n1A" customClass="SharedMemesCollectionViewController" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="cX1-R9-2Lc">
+                <collectionViewController storyboardIdentifier="SharedMemesCollectionViewController" id="R3s-2B-nBJ" customClass="SharedMemesCollectionViewController" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="RM7-gf-xLd">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="2" minimumInteritemSpacing="2" id="pah-5R-vTV">
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="2" minimumInteritemSpacing="2" id="TZG-wh-zc0">
                             <size key="itemSize" width="50" height="50"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="2" minY="2" maxX="2" maxY="2"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SharedMemesCollectionViewCellID" id="MMx-Hr-rgj" customClass="SharedMemesCollectionViewCell" customModule="MemeMe" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CollectionViewCellID" id="xfv-0Y-KfU" customClass="SharedMemesCollectionViewCell" customModule="MemeMe" customModuleProvider="target">
                                 <rect key="frame" x="2" y="66" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="79t-5j-nCw">
-                                            <rect key="frame" x="8" y="8" width="34" height="34"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="huf-R5-aiP">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         </imageView>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <constraints>
-                                    <constraint firstAttribute="topMargin" secondItem="79t-5j-nCw" secondAttribute="top" id="8xH-sq-ein"/>
-                                    <constraint firstAttribute="bottomMargin" secondItem="79t-5j-nCw" secondAttribute="bottom" id="bvA-TK-LgE"/>
-                                    <constraint firstAttribute="leadingMargin" secondItem="79t-5j-nCw" secondAttribute="leading" id="qbx-CC-jGy"/>
-                                    <constraint firstAttribute="trailingMargin" secondItem="79t-5j-nCw" secondAttribute="trailing" id="wn8-TM-aYF"/>
+                                    <constraint firstItem="huf-R5-aiP" firstAttribute="top" secondItem="xfv-0Y-KfU" secondAttribute="top" id="SyF-s3-ZTF"/>
+                                    <constraint firstItem="huf-R5-aiP" firstAttribute="leading" secondItem="xfv-0Y-KfU" secondAttribute="leading" id="ece-wA-PDw"/>
+                                    <constraint firstAttribute="bottom" secondItem="huf-R5-aiP" secondAttribute="bottom" id="tOy-oP-e3f"/>
+                                    <constraint firstAttribute="trailing" secondItem="huf-R5-aiP" secondAttribute="trailing" id="z2t-kA-hi1"/>
                                 </constraints>
                                 <connections>
-                                    <outlet property="imageView" destination="79t-5j-nCw" id="asQ-gc-RXa"/>
+                                    <outlet property="imageView" destination="huf-R5-aiP" id="OVP-nu-tKQ"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
                         <connections>
-                            <outlet property="dataSource" destination="I6H-pd-n1A" id="0qc-g3-XgE"/>
-                            <outlet property="delegate" destination="I6H-pd-n1A" id="jeE-db-fK0"/>
+                            <outlet property="dataSource" destination="R3s-2B-nBJ" id="gzs-Hj-7hm"/>
+                            <outlet property="delegate" destination="R3s-2B-nBJ" id="bmK-EF-DbK"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" title="Shared Memes" id="3Ia-zB-Lyh"/>
+                    <navigationItem key="navigationItem" id="rSU-dC-eTt"/>
                 </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="aL6-Wg-O42" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zxe-rJ-qEU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1894" y="2631"/>
         </scene>
@@ -223,7 +223,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="I6H-pd-n1A" kind="relationship" relationship="rootViewController" id="lVK-Mz-S8B"/>
+                        <segue destination="R3s-2B-nBJ" kind="relationship" relationship="rootViewController" id="4cg-vi-AjC"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gQ2-oe-yxo" userLabel="First Responder" sceneMemberID="firstResponder"/>
