@@ -22,6 +22,8 @@ class SharedMemesTableViewController: UITableViewController {
     // ref to newMemeBbi
     var newMemeBBi: UIBarButtonItem!
     
+    var firstRun: Bool = true
+    
     // MARK: View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,12 +37,6 @@ class SharedMemesTableViewController: UITableViewController {
                                      target: self,
                                      action: #selector(SharedMemesTableViewController.newMemeBbiPressed(_:)))
         navigationItem.rightBarButtonItem = newMemeBBi
-        
-        // launch MemeEditorVC if no shared memes
-        if appDelegate.memes.count == 0 {
-            createDebugMemes()
-            newMemeBbiPressed(nil)
-        }
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -52,6 +48,17 @@ class SharedMemesTableViewController: UITableViewController {
         
         // enable edit bbi only if Memes
         editButtonItem().enabled = appDelegate.memes.count > 0
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        
+        // launch meme editor at app launch if no shared memes, but not again unless user prompted
+        if firstRun && appDelegate.memes.count == 0 {
+            
+            createDebugMemes()
+            newMemeBbiPressed(nil)
+            firstRun = false
+        }
     }
     
     override func setEditing(editing: Bool, animated: Bool) {
@@ -88,9 +95,9 @@ class SharedMemesTableViewController: UITableViewController {
     // MARK: - Table view delegate functions
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        // cell selected. Navigate to MemeVC
+        // cell selected. Navigate to MemeDetailVC
         let meme = appDelegate.memes[indexPath.row]
-        let vc = storyboard?.instantiateViewControllerWithIdentifier("MemeViewController") as! MemeViewController
+        let vc = storyboard?.instantiateViewControllerWithIdentifier("MemeDetailViewController") as! MemeDetailViewController
         vc.meme = meme
         
         // hide tab, push VC
