@@ -74,7 +74,15 @@ class SharedMemesCollectionViewController: UICollectionViewController {
 
     // MARK: - CollectionView Delegate
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        print("didSelect")
+
+        // cell selected. Navigate to MemeVC
+        let meme = appDelegate.memes[indexPath.row]
+        let vc = storyboard?.instantiateViewControllerWithIdentifier("MemeViewController") as! MemeViewController
+        vc.meme = meme
+        
+        // hide tab, push VC
+        self.tabBarController?.tabBar.hidden = true
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     // MARK: - Launch Meme Editor

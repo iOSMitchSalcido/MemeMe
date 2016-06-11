@@ -19,6 +19,9 @@ class SharedMemesTableViewController: UITableViewController {
     // ref to app delegate
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 
+    // ref to newMemeBbi
+    var newMemeBBi: UIBarButtonItem!
+    
     // MARK: View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,9 +31,10 @@ class SharedMemesTableViewController: UITableViewController {
         navigationItem.leftBarButtonItem = editButtonItem()
         
         // create new Meme bbi
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add,
-                                                            target: self,
-                                                            action: #selector(SharedMemesTableViewController.newMemeBbiPressed(_:)))
+        newMemeBBi = UIBarButtonItem(barButtonSystemItem: .Add,
+                                     target: self,
+                                     action: #selector(SharedMemesTableViewController.newMemeBbiPressed(_:)))
+        navigationItem.rightBarButtonItem = newMemeBBi
         
         // launch MemeEditorVC if no shared memes
         if appDelegate.memes.count == 0 {
@@ -48,6 +52,14 @@ class SharedMemesTableViewController: UITableViewController {
         
         // enable edit bbi only if Memes
         editButtonItem().enabled = appDelegate.memes.count > 0
+    }
+    
+    override func setEditing(editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        
+        // allow editing and switching tabs only if NOT editing cells
+        newMemeBBi.enabled = !editing
+        tabBarController?.tabBar.hidden = editing
     }
     
     // MARK: - Table view data source functions
