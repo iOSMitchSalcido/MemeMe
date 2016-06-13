@@ -105,7 +105,7 @@ class SharedMemesTableViewController: UITableViewController {
         self.tabBarController?.tabBar.hidden = true
         navigationController?.pushViewController(vc, animated: true)
     }
- 
+
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         // OK to edit cell
         return true
@@ -143,7 +143,7 @@ class SharedMemesTableViewController: UITableViewController {
     
     // MARK: - Launch Meme Editor
     func newMemeBbiPressed(sender: UIBarButtonItem?) {
-
+        
         // create MemeEditor embedded in navController
         let vc = storyboard?.instantiateViewControllerWithIdentifier("MemeEditorViewController") as! MemeEditorViewController
         let nc = UINavigationController(rootViewController: vc)
