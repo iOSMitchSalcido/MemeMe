@@ -16,7 +16,6 @@
  - share Meme using activityViewController
  */
 
-
 import UIKit
 
 class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegate,
@@ -378,7 +377,6 @@ UINavigationControllerDelegate, UITextFieldDelegate {
             appDelegate.memes.append(meme)
         }
     }
-    
     
     // cancel/dismiss meme creation
     func cancelBbiPressed(sender: UIBarButtonItem?) {
