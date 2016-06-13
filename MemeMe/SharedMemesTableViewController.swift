@@ -57,6 +57,7 @@ class SharedMemesTableViewController: UITableViewController {
         // launch meme editor at app launch if no shared memes, but not again unless user prompted
         if firstRun && appDelegate.memes.count == 0 {
             
+            print("viewDidAppear")
             createDebugMemes()
             newMemeBbiPressed(nil)
             firstRun = false
