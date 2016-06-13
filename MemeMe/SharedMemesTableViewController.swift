@@ -16,12 +16,13 @@ import UIKit
 
 class SharedMemesTableViewController: UITableViewController {
     
-    // ref to app delegate
+    // ref to app delegate..Meme store is defined in appDelegate
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 
     // ref to newMemeBbi
     var newMemeBBi: UIBarButtonItem!
     
+    // used to steer app to bring up MemeEditor if no memes available at app startup
     var firstRun: Bool = true
     
     // MARK: View lifecycle

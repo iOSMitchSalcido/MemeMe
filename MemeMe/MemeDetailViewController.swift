@@ -15,7 +15,7 @@ import UIKit
 
 class MemeDetailViewController: UIViewController {
 
-    // ref to app delegate
+    // ref to app delegate..Meme store is defined in appDelegate
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     // ref to index of Meme being view
@@ -78,6 +78,7 @@ class MemeDetailViewController: UIViewController {
         }
     }
     
+    // MARK: Button Actions
     @IBAction func deleteMemeButtonPressed(sender: UIButton) {
         
         /*

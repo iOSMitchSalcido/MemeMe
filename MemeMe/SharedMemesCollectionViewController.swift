@@ -19,7 +19,7 @@ class SharedMemesCollectionViewController: UICollectionViewController {
     // constant for number of cells/memes to display in each row in collectionView
     let CELLS_PER_ROW: CGFloat = 4.0
     
-    // ref to app delegate
+    // ref to app delegate..Meme store is defined in appDelegate
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 
     // MARK: View lifecycle
