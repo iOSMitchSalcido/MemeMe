@@ -22,8 +22,6 @@ class MemeDetailViewController: UIViewController {
     var memeIndex: Int?
     
     // ref to view objects
-    @IBOutlet weak var deleteMemeButton: UIButton!
-    @IBOutlet weak var editMemeButton: UIButton!
     @IBOutlet weak var imageView: UIImageView!
     
     // MARK: View lifecycle
@@ -33,53 +31,20 @@ class MemeDetailViewController: UIViewController {
         // view title
         title = "Meme"
         
-        // edit button on right navbar
-        navigationItem.rightBarButtonItem = editButtonItem()
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
         // test for valid index, grab meme and place image in view
         if let index = memeIndex {
             let meme = appDelegate.memes[index]
             imageView.image = meme.memedImage
         }
         
-        // disable and hide edit/delete buttons
-        deleteMemeButton.enabled = false
-        deleteMemeButton.hidden = true
-        editMemeButton.enabled = false
-        editMemeButton.hidden = true
-    }
-    
-    override func setEditing(editing: Bool, animated: Bool) {
-        super.setEditing(editing, animated: animated)
-        
-        // config edit/delete buttons based on editing state
-        deleteMemeButton.enabled = editing
-        deleteMemeButton.hidden = !editing
-        editMemeButton.enabled = editing
-        editMemeButton.hidden = !editing
-        
-        if editing {
-            
-            // view is editing. Dim Meme image and replace back navbar button with "empty" bbi
-            imageView.alpha = 0.5
-            navigationItem.leftBarButtonItem = UIBarButtonItem(title: " ",
-                                                               style: .Plain, target: nil,
-                                                               action: nil)
-        }
-        else {
-            
-            // not editing. un-dim Meme, restore back navbar button
-            imageView.alpha = 1.0
-            navigationItem.leftBarButtonItem = nil
-        }
+        // add trash bbi on right navbar to delete Meme
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Trash,
+                                                            target: self,
+                                                            action: #selector(MemeDetailViewController.deleteMeme(_:)))
     }
     
     // MARK: Button Actions
-    @IBAction func deleteMemeButtonPressed(sender: UIButton) {
+    func deleteMeme(sender: UIBarButtonItem) {
         
         /*
          Delete Meme button pressed
@@ -107,9 +72,5 @@ class MemeDetailViewController: UIViewController {
         ac.addAction(cancelAction)
         ac.addAction(deleteAction)
         presentViewController(ac, animated: true, completion: nil)
-    }
-    
-    @IBAction func editMemeButtonPressed(sender: UIButton) {
-        print("editMemeButtonPressed")
     }
 }
