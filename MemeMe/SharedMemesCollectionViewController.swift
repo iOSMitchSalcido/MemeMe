@@ -76,10 +76,9 @@ class SharedMemesCollectionViewController: UICollectionViewController {
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
 
         // cell selected. Navigate to MemeDetailVC
-        let meme = appDelegate.memes[indexPath.row]
         let vc = storyboard?.instantiateViewControllerWithIdentifier("MemeDetailViewController") as! MemeDetailViewController
-        vc.meme = meme
-        
+        vc.memeIndex = indexPath.row
+
         // hide tab, push VC
         self.tabBarController?.tabBar.hidden = true
         navigationController?.pushViewController(vc, animated: true)

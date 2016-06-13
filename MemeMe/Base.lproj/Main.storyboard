@@ -25,11 +25,17 @@
                                 <rect key="frame" x="20" y="50" width="560" height="40"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                 <state key="normal" title="Delete Meme"/>
+                                <connections>
+                                    <action selector="deleteMemeButtonPressed:" destination="Is3-at-hl4" eventType="touchUpInside" id="iVp-Kv-hhY"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zW4-9b-Nd1">
                                 <rect key="frame" x="20" y="530" width="560" height="40"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                 <state key="normal" title="Edit Meme"/>
+                                <connections>
+                                    <action selector="editMemeButtonPressed:" destination="Is3-at-hl4" eventType="touchUpInside" id="KKY-yD-OkE"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -47,6 +53,8 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="deleteMemeButton" destination="adl-Hx-jXY" id="HED-mN-eR5"/>
+                        <outlet property="editMemeButton" destination="zW4-9b-Nd1" id="8ag-xD-5qm"/>
                         <outlet property="imageView" destination="KXg-6O-Whu" id="JBT-2h-tJC"/>
                     </connections>
                 </viewController>
@@ -117,7 +125,7 @@
             </objects>
             <point key="canvasLocation" x="1846" y="1089"/>
         </scene>
-        <!--Shared Memes-->
+        <!--Shared-->
         <scene sceneID="fhT-KA-dlI">
             <objects>
                 <tableViewController storyboardIdentifier="SharedMemesTableViewController" id="2JJ-bJ-yKg" customClass="SharedMemesTableViewController" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
@@ -156,13 +164,13 @@
                             <outlet property="delegate" destination="2JJ-bJ-yKg" id="Pn4-0z-xPN"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Shared Memes" id="rfq-Bt-NsG"/>
+                    <navigationItem key="navigationItem" title="Shared" id="rfq-Bt-NsG"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VFb-h0-YLG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1894" y="1905"/>
         </scene>
-        <!--Shared Memes-->
+        <!--Shared-->
         <scene sceneID="5TH-WL-ENh">
             <objects>
                 <collectionViewController storyboardIdentifier="SharedMemesCollectionViewController" id="R3s-2B-nBJ" customClass="SharedMemesCollectionViewController" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
@@ -205,7 +213,7 @@
                             <outlet property="delegate" destination="R3s-2B-nBJ" id="bmK-EF-DbK"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" title="Shared Memes" id="rSU-dC-eTt"/>
+                    <navigationItem key="navigationItem" title="Shared" id="rSU-dC-eTt"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zxe-rJ-qEU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
