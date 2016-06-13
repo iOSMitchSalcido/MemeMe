@@ -11,7 +11,6 @@
  VC provides functionality to view a Meme in detail. Also includes edit button to delete or edit the meme
  */
 
-
 import UIKit
 
 class MemeDetailViewController: UIViewController {

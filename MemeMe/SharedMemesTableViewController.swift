@@ -87,7 +87,7 @@ class SharedMemesTableViewController: UITableViewController {
         vc.memeIndex = indexPath.row
         
         // hide tab, push VC
-        self.tabBarController?.tabBar.hidden = true
+        tabBarController?.tabBar.hidden = true
         navigationController?.pushViewController(vc, animated: true)
     }
 

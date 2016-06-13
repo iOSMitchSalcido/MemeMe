@@ -54,7 +54,7 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         super.viewDidLoad()
         
         // show toolbar
-        self.navigationController?.setToolbarHidden(false, animated: false)
+        navigationController?.setToolbarHidden(false, animated: false)
         
         // create bbi's for selecting image, camera and photo album..also create flexible bbi for spacing
         cameraBbi = UIBarButtonItem(barButtonSystemItem: .Camera,
@@ -83,7 +83,7 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         shareMemeBbi = UIBarButtonItem(barButtonSystemItem: .Action,
                                        target: self,
                                        action: #selector(MemeEditorViewController.shareMemeBbiPressed(_:)))
-        self.navigationItem.leftBarButtonItem = shareMemeBbi
+        navigationItem.leftBarButtonItem = shareMemeBbi
 
         // cancel bbi on right navbar
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel,

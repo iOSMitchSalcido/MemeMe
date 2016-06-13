@@ -12,7 +12,6 @@
  a detail meme view using MemeViewController.
  */
 
-
 import UIKit
 
 class SharedMemesCollectionViewController: UICollectionViewController {
@@ -81,7 +80,7 @@ class SharedMemesCollectionViewController: UICollectionViewController {
         vc.memeIndex = indexPath.row
 
         // hide tab, push VC
-        self.tabBarController?.tabBar.hidden = true
+        tabBarController?.tabBar.hidden = true
         navigationController?.pushViewController(vc, animated: true)
     }
     
