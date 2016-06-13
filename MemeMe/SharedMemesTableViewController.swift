@@ -22,9 +22,6 @@ class SharedMemesTableViewController: UITableViewController {
     // ref to newMemeBbi
     var newMemeBBi: UIBarButtonItem!
     
-    // used to steer app to bring up MemeEditor if no memes available at app startup
-    var firstRun: Bool = true
-    
     // MARK: View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,17 +46,6 @@ class SharedMemesTableViewController: UITableViewController {
         
         // enable edit bbi only if Memes
         editButtonItem().enabled = appDelegate.memes.count > 0
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        
-        // launch meme editor at app launch if no shared memes, but not again unless user prompted
-        if firstRun && appDelegate.memes.count == 0 {
-            
-            //createDebugMemes()
-            newMemeBbiPressed(nil)
-            firstRun = false
-        }
     }
     
     override func setEditing(editing: Bool, animated: Bool) {
