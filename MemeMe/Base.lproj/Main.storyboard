@@ -217,7 +217,7 @@
         <scene sceneID="0xU-mB-Ycf">
             <objects>
                 <navigationController id="k6l-a0-gMw" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Collection" id="JZJ-ia-A7d"/>
+                    <tabBarItem key="tabBarItem" title="Collection" image="collectionTabImage" id="JZJ-ia-A7d"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="sfW-06-RuV">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -234,7 +234,7 @@
         <scene sceneID="d5D-u4-ee0">
             <objects>
                 <navigationController id="fir-vP-QSJ" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Table" id="6UG-9f-f07"/>
+                    <tabBarItem key="tabBarItem" title="Table" image="tableTabImage" id="6UG-9f-f07"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="hRH-g4-xuG">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -249,6 +249,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="collectionTabImage" width="30" height="30"/>
         <image name="pickMeme" width="560" height="536"/>
+        <image name="tableTabImage" width="30" height="30"/>
     </resources>
 </document>
