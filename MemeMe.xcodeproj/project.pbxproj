@@ -107,13 +107,13 @@
 		863F985A1CE3644F00BA80B8 /* MemeMe */ = {
 			isa = PBXGroup;
 			children = (
-				86F2A1FC1D0E49D9003C0248 /* MemeDetailViewController.swift */,
-				86F2A1FD1D0E49D9003C0248 /* MemeEditorViewController.swift */,
-				86F2A1FE1D0E49D9003C0248 /* SharedMemesCollectionViewCell.swift */,
-				86F2A1FF1D0E49D9003C0248 /* SharedMemesCollectionViewController.swift */,
 				863F985B1CE3644F00BA80B8 /* AppDelegate.swift */,
-				86983BC31CE497BD000B5596 /* MemeModel.swift */,
+				86F2A1FD1D0E49D9003C0248 /* MemeEditorViewController.swift */,
 				86AB9D4D1CFD01AB0075B24D /* SharedMemesTableViewController.swift */,
+				86F2A1FF1D0E49D9003C0248 /* SharedMemesCollectionViewController.swift */,
+				86F2A1FC1D0E49D9003C0248 /* MemeDetailViewController.swift */,
+				86F2A1FE1D0E49D9003C0248 /* SharedMemesCollectionViewCell.swift */,
+				86983BC31CE497BD000B5596 /* MemeModel.swift */,
 				863F985F1CE3644F00BA80B8 /* Main.storyboard */,
 				863F98621CE3644F00BA80B8 /* Assets.xcassets */,
 				863F98641CE3644F00BA80B8 /* LaunchScreen.storyboard */,

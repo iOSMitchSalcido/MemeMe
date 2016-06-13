@@ -238,6 +238,9 @@ UINavigationControllerDelegate, UITextFieldDelegate {
                 
                 // save meme
                 self.saveMeme()
+                
+                // dismiss
+                self.cancelBbiPressed(nil)
             }
         }
         
