@@ -368,4 +368,10 @@ UINavigationControllerDelegate, UITextFieldDelegate {
             appDelegate.memes.append(meme)
         }
     }
+    
+    // cancel/dismiss meme creation
+    func cancelBbiPressed(sender: UIBarButtonItem?) {
+        
+        dismissViewControllerAnimated(true, completion: nil)
+    }
 }
