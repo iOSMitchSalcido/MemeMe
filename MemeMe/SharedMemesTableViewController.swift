@@ -94,6 +94,7 @@ class SharedMemesTableViewController: UITableViewController {
         return cell
     }
 
+    /*
     // MARK: - Table view delegate functions
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
@@ -105,7 +106,7 @@ class SharedMemesTableViewController: UITableViewController {
         self.tabBarController?.tabBar.hidden = true
         navigationController?.pushViewController(vc, animated: true)
     }
-    
+    */
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         // OK to edit cell
         return true
@@ -143,7 +144,7 @@ class SharedMemesTableViewController: UITableViewController {
     
     // MARK: - Launch Meme Editor
     func newMemeBbiPressed(sender: UIBarButtonItem?) {
-        
+        /*
         // create MemeEditor embedded in navController
         let vc = storyboard?.instantiateViewControllerWithIdentifier("MemeEditorViewController") as! MemeEditorViewController
         let nc = UINavigationController(rootViewController: vc)
@@ -156,8 +157,9 @@ class SharedMemesTableViewController: UITableViewController {
             // invocation as a result of no saved memes in viewDidLoad (e.g. initial app launch)
             presentViewController(nc, animated: false, completion: nil)
         }
+ */
     }
-    
+
     // MARK: - Helper Functions
     func createDebugMemes() {
         
