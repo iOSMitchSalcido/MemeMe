@@ -349,10 +349,6 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     // take a screenshot of iOS device screen, return "Meme'd" image
     func screenShot() -> UIImage {
         
-        // remove textField border, don't want in meme
-        topTextField.borderStyle = .None
-        bottomTextField.borderStyle = .None
-        
         // Render view to an image
         UIGraphicsBeginImageContext(self.view.frame.size)
         view.drawViewHierarchyInRect(self.view.frame,
@@ -360,10 +356,6 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         let image : UIImage =
             UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        
-        // restore textField border
-        topTextField.borderStyle = .RoundedRect
-        bottomTextField.borderStyle = .RoundedRect
         
         return image
     }
