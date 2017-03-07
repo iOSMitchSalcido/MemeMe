@@ -223,11 +223,12 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         
         // take a screen shot, use as item in ActivityViewController
         let memedImage = screenShot()
+
         let vc = UIActivityViewController(activityItems: ["Check out my Meme !", memedImage], applicationActivities: nil)
 
         // completion for ActivityViewController. Save meme if successful share
-        vc.completionWithItemsHandler = {(activityType: String?, completed: Bool,
-            returnedItems: [AnyObject]?, error: NSError?) -> Void in
+        vc.completionWithItemsHandler = {(activityType, completed,
+            returnedItems, error) in
             
             if completed {
                 // Meme share was completed successfully, save Meme
