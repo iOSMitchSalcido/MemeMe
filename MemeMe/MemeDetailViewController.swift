@@ -16,7 +16,7 @@ import UIKit
 class MemeDetailViewController: UIViewController {
 
     // ref to app delegate..Meme store is defined in appDelegate
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     // ref to index of Meme being view
     var memeIndex: Int?
@@ -38,13 +38,13 @@ class MemeDetailViewController: UIViewController {
         }
         
         // add trash bbi on right navbar to delete Meme
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Trash,
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash,
                                                             target: self,
                                                             action: #selector(MemeDetailViewController.deleteMeme(_:)))
     }
     
     // MARK: Button Actions
-    func deleteMeme(sender: UIBarButtonItem) {
+    func deleteMeme(_ sender: UIBarButtonItem) {
         
         /*
          Delete Meme button pressed
@@ -53,24 +53,24 @@ class MemeDetailViewController: UIViewController {
         
         let ac = UIAlertController(title: "Delete Meme ?",
                                    message: "Continuing will remove Meme from saved Memes",
-                                   preferredStyle: .ActionSheet)
+                                   preferredStyle: .actionSheet)
         
         // create Cancel and Delete actions for Alert
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let deleteAction = UIAlertAction(title: "Delete",
-                                         style: .Destructive){(action) -> Void in
+                                         style: .destructive){(action) -> Void in
                                             
                                             // completeion
                                             // remove from memes, pop vc
                                             if let index = self.memeIndex {
-                                                self.appDelegate.memes.removeAtIndex(index)
-                                                self.navigationController?.popViewControllerAnimated(true)
+                                                self.appDelegate.memes.remove(at: index)
+                                                self.navigationController?.popViewController(animated: true)
                                             }
         }
         
         // add actions and show
         ac.addAction(cancelAction)
         ac.addAction(deleteAction)
-        presentViewController(ac, animated: true, completion: nil)
+        present(ac, animated: true, completion: nil)
     }
 }

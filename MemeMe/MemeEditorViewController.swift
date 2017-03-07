@@ -57,102 +57,102 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         navigationController?.setToolbarHidden(false, animated: false)
         
         // create bbi's for selecting image, camera and photo album..also create flexible bbi for spacing
-        cameraBbi = UIBarButtonItem(barButtonSystemItem: .Camera,
+        cameraBbi = UIBarButtonItem(barButtonSystemItem: .camera,
                                     target: self,
                                     action: #selector(MemeEditorViewController.pickAnImage(_:)))
         albumBbi = UIBarButtonItem(title: "Album",
-                                   style: .Plain,
+                                   style: .plain,
                                    target: self,
                                    action: #selector(MemeEditorViewController.pickAnImage(_:)))
         editFontBbi = UIBarButtonItem(title: "Font",
-                                      style: .Plain,
+                                      style: .plain,
                                       target: self,
                                       action: #selector(MemeEditorViewController.fontBbiPressed(_:)))
         
         // flex bbi for spacing
-        let flexBbi = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
+        let flexBbi = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         
         // set toolbar
         toolbarItems = [flexBbi, cameraBbi, flexBbi, albumBbi, flexBbi, editFontBbi, flexBbi]
         
         // enable bbi's based on availability on device that app being run on
-        cameraBbi.enabled = UIImagePickerController.isSourceTypeAvailable(.Camera)
-        albumBbi.enabled = UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary)
+        cameraBbi.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
+        albumBbi.isEnabled = UIImagePickerController.isSourceTypeAvailable(.photoLibrary)
         
         // share meme bbi on left navbar
-        shareMemeBbi = UIBarButtonItem(barButtonSystemItem: .Action,
+        shareMemeBbi = UIBarButtonItem(barButtonSystemItem: .action,
                                        target: self,
                                        action: #selector(MemeEditorViewController.shareMemeBbiPressed(_:)))
         navigationItem.leftBarButtonItem = shareMemeBbi
 
         // cancel bbi on right navbar
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel,
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel,
                                                             target: self,
                                                             action: #selector(MemeEditorViewController.cancelBbiPressed(_:)))
         
         // add a few fonts to memeTextAttribArray for user selection when editing meme
         let impactTextAttributes = [
-            NSStrokeColorAttributeName : UIColor.blackColor(),
-            NSForegroundColorAttributeName : UIColor.whiteColor(),
+            NSStrokeColorAttributeName : UIColor.black,
+            NSForegroundColorAttributeName : UIColor.white,
             NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
             NSStrokeWidthAttributeName : -2.0,
-            ]
+            ] as [String : Any]
         let textAttributes1 = [
-            NSStrokeColorAttributeName : UIColor.redColor(),
-            NSForegroundColorAttributeName : UIColor.greenColor(),
+            NSStrokeColorAttributeName : UIColor.red,
+            NSForegroundColorAttributeName : UIColor.green,
             NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
             NSStrokeWidthAttributeName : -2.0,
-            ]
+            ] as [String : Any]
         let textAttributes2 = [
-            NSStrokeColorAttributeName : UIColor.blueColor(),
-            NSForegroundColorAttributeName : UIColor.blackColor(),
+            NSStrokeColorAttributeName : UIColor.blue,
+            NSForegroundColorAttributeName : UIColor.black,
             NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
             NSStrokeWidthAttributeName : -2.0,
-            ]
+            ] as [String : Any]
         let textAttributes3 = [
-            NSStrokeColorAttributeName : UIColor.blackColor(),
-            NSForegroundColorAttributeName : UIColor.whiteColor(),
+            NSStrokeColorAttributeName : UIColor.black,
+            NSForegroundColorAttributeName : UIColor.white,
             NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
             NSStrokeWidthAttributeName : 3.0,
-            ]
-        memeTextAttribArray.append(impactTextAttributes)
-        memeTextAttribArray.append(textAttributes1)
-        memeTextAttribArray.append(textAttributes2)
-        memeTextAttribArray.append(textAttributes3)
+            ] as [String : Any]
+        memeTextAttribArray.append(impactTextAttributes as [String : AnyObject])
+        memeTextAttribArray.append(textAttributes1 as [String : AnyObject])
+        memeTextAttribArray.append(textAttributes2 as [String : AnyObject])
+        memeTextAttribArray.append(textAttributes3 as [String : AnyObject])
         
         // config textFields
         topTextField.delegate = self
         bottomTextField.delegate = self
         topTextField.defaultTextAttributes = memeTextAttribArray[textAttribIndex]
         bottomTextField.defaultTextAttributes = memeTextAttribArray[textAttribIndex]
-        topTextField.textAlignment = .Center
-        bottomTextField.textAlignment = .Center
+        topTextField.textAlignment = .center
+        bottomTextField.textAlignment = .center
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         // show top/bottom textFields only if an image is visible
         // enable shareMeme and Preview Meme, Font, only if image is visible
         if photoImage != nil {
             
-            topTextField.hidden = false
-            bottomTextField.hidden = false
-            shareMemeBbi.enabled = true
-            editFontBbi.enabled = true
+            topTextField.isHidden = false
+            bottomTextField.isHidden = false
+            shareMemeBbi.isEnabled = true
+            editFontBbi.isEnabled = true
         }
         else {
-            topTextField.hidden = true
-            bottomTextField.hidden = true
-            shareMemeBbi.enabled = false
-            editFontBbi.enabled = false
+            topTextField.isHidden = true
+            bottomTextField.isHidden = true
+            shareMemeBbi.isEnabled = false
+            editFontBbi.isEnabled = false
         }
         
         // begin keyboard notifications..used to shift bottom keybboard up when editing
         beginKeyboardNotifications()
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         // stop keyboard notifications while view not visible
@@ -164,15 +164,15 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     func beginKeyboardNotifications() {
      
         // begin show notification
-        NSNotificationCenter.defaultCenter().addObserver(self,
+        NotificationCenter.default.addObserver(self,
                                                          selector: #selector(MemeEditorViewController.keyboardWillShow(_:)),
-                                                         name: UIKeyboardWillShowNotification,
+                                                         name: NSNotification.Name.UIKeyboardWillShow,
                                                          object: nil)
         
         // begin hide notification
-        NSNotificationCenter.defaultCenter().addObserver(self,
+        NotificationCenter.default.addObserver(self,
                                                          selector: #selector(MemeEditorViewController.keyboardWillHide(_:)),
-                                                         name: UIKeyboardWillHideNotification,
+                                                         name: NSNotification.Name.UIKeyboardWillHide,
                                                          object: nil)
     }
     
@@ -180,27 +180,27 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     func stopKeyboardNotifications() {
         
         // end show notification
-        NSNotificationCenter.defaultCenter().removeObserver(self,
-                                                            name: UIKeyboardWillShowNotification,
+        NotificationCenter.default.removeObserver(self,
+                                                            name: NSNotification.Name.UIKeyboardWillShow,
                                                             object: nil)
         // end hide notification
-        NSNotificationCenter.defaultCenter().removeObserver(self,
-                                                            name: UIKeyboardWillHideNotification,
+        NotificationCenter.default.removeObserver(self,
+                                                            name: NSNotification.Name.UIKeyboardWillHide,
                                                             object: nil)
     }
     
     // keyboard about to show
-    func keyboardWillShow(notification: NSNotification) {
+    func keyboardWillShow(_ notification: Notification) {
         
         // shift up only if bottomTextField is editing
-        if bottomTextField.editing {
+        if bottomTextField.isEditing {
             
             view.frame.origin.y -= getKeyboardHeight(notification)
         }
     }
     
     // keyboard about to hide
-    func keyboardWillHide(notification: NSNotification) {
+    func keyboardWillHide(_ notification: Notification) {
         
         // shift back down only if previously shifted up
         if view.frame.origin.y < 0.0 {
@@ -210,21 +210,21 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     }
     
     // return keyboard height
-    func getKeyboardHeight(notification: NSNotification) -> CGFloat {
+    func getKeyboardHeight(_ notification: Notification) -> CGFloat {
         
         let userInfo = notification.userInfo
         let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue // of CGRect
-        return keyboardSize.CGRectValue().height
+        return keyboardSize.cgRectValue.height
     }
     
     //MARK: BBI Action functions
     // shareMeme bbi pressed
-    func shareMemeBbiPressed(sender: UIBarButtonItem) {
+    func shareMemeBbiPressed(_ sender: UIBarButtonItem) {
         
         // take a screen shot, use as item in ActivityViewController
         let memedImage = screenShot()
         let vc = UIActivityViewController(activityItems: ["Check out my Meme !", memedImage], applicationActivities: nil)
-        
+
         // completion for ActivityViewController. Save meme if successful share
         vc.completionWithItemsHandler = {(activityType: String?, completed: Bool,
             returnedItems: [AnyObject]?, error: NSError?) -> Void in
@@ -243,30 +243,30 @@ UINavigationControllerDelegate, UITextFieldDelegate {
                 self.cancelBbiPressed(nil)
             }
         }
-        
-        presentViewController(vc, animated: true, completion: nil)
+ 
+        present(vc, animated: true, completion: nil)
     }
     
     // function to create/invoke UIImagePickerViewController
-    func pickAnImage(sender: UIBarButtonItem) {
+    func pickAnImage(_ sender: UIBarButtonItem) {
         
         // create imagePick, set photo source based on bbi that was pressed
         let imagePickerController = UIImagePickerController()
         if sender == cameraBbi {
-            imagePickerController.sourceType = .Camera
+            imagePickerController.sourceType = .camera
         }
         else if sender == albumBbi {
-            imagePickerController.sourceType = .PhotoLibrary
+            imagePickerController.sourceType = .photoLibrary
         }
         
         // set delegate and present
         imagePickerController.delegate = self
         imagePickerController.allowsEditing = true
-        presentViewController(imagePickerController, animated: true, completion: nil)
+        present(imagePickerController, animated: true, completion: nil)
     }
     
     // function to change font in textFields
-    func fontBbiPressed(sender: UIBarButtonItem) {
+    func fontBbiPressed(_ sender: UIBarButtonItem) {
         
         textAttribIndex += 1
         if textAttribIndex >= memeTextAttribArray.count {
@@ -274,21 +274,21 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         }
         topTextField.defaultTextAttributes = memeTextAttribArray[textAttribIndex]
         bottomTextField.defaultTextAttributes = memeTextAttribArray[textAttribIndex]
-        topTextField.textAlignment = .Center
-        bottomTextField.textAlignment = .Center
+        topTextField.textAlignment = .center
+        bottomTextField.textAlignment = .center
     }
     
     //MARK: UIImagePicker Delegate functions
     // imagePickerController delegate function
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         
         // cancel image selection
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     // UIImageImagePickerController delegate function
-    func imagePickerController(picker: UIImagePickerController,
-                               didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [String : Any]) {
         
         // imagePicker has selected an image, get image and show in imageView
         // ..save edited image if available
@@ -301,32 +301,32 @@ UINavigationControllerDelegate, UITextFieldDelegate {
             photoImage = imageView.image
         }
         
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     //MARK: UITextField Delegate functions
     // textField delegate function
-    func textFieldDidBeginEditing(textField: UITextField) {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
         
         // dim image when editing text
         imageView.alpha = 0.5
         
         // disable share when editing text
-        shareMemeBbi.enabled = false
+        shareMemeBbi.isEnabled = false
     }
     
     // TextField delegate function
-    func textFieldDidEndEditing(textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         
         // un-dim image when done editing text
         imageView.alpha = 1.0
         
         // enable share button when not editing text
-        shareMemeBbi.enabled = true
+        shareMemeBbi.isEnabled = true
     }
     
     // textField delegate function
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         // return button ends editing, hide keyboard
         textField.resignFirstResponder()
@@ -335,10 +335,10 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     
     //MARK: UITapGestureRecognizer functions
     // action for tap gr
-    @IBAction func tapDetected(sender: UITapGestureRecognizer) {
+    @IBAction func tapDetected(_ sender: UITapGestureRecognizer) {
         
         // end editing
-        if topTextField.editing || bottomTextField.editing {
+        if topTextField.isEditing || bottomTextField.isEditing {
             
             view.endEditing(true)
         }
@@ -351,10 +351,10 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         
         // Render view to an image
         UIGraphicsBeginImageContext(self.view.frame.size)
-        view.drawViewHierarchyInRect(self.view.frame,
+        view.drawHierarchy(in: self.view.frame,
                                      afterScreenUpdates: true)
         let image : UIImage =
-            UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         
         return image
@@ -364,14 +364,14 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     func saveMeme() {
         
         if let meme = self.meme {
-            let appDelegate  = UIApplication.sharedApplication().delegate as! AppDelegate
+            let appDelegate  = UIApplication.shared.delegate as! AppDelegate
             appDelegate.memes.append(meme)
         }
     }
     
     // cancel/dismiss meme creation
-    func cancelBbiPressed(sender: UIBarButtonItem?) {
+    func cancelBbiPressed(_ sender: UIBarButtonItem?) {
         
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 }

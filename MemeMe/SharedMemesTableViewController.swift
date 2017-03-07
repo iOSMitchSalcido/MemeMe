@@ -17,7 +17,7 @@ import UIKit
 class SharedMemesTableViewController: UITableViewController {
     
     // ref to app delegate..Meme store is defined in appDelegate
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
     // ref to newMemeBbi
     var newMemeBBi: UIBarButtonItem!
@@ -28,47 +28,47 @@ class SharedMemesTableViewController: UITableViewController {
         
         
         // edit/done bbi on left navbar
-        navigationItem.leftBarButtonItem = editButtonItem()
+        navigationItem.leftBarButtonItem = editButtonItem
         
         // create new Meme bbi
-        newMemeBBi = UIBarButtonItem(barButtonSystemItem: .Add,
+        newMemeBBi = UIBarButtonItem(barButtonSystemItem: .add,
                                      target: self,
                                      action: #selector(SharedMemesTableViewController.newMemeBbiPressed(_:)))
         navigationItem.rightBarButtonItem = newMemeBBi
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         // show tabBar, reload table
-        tabBarController?.tabBar.hidden = false
+        tabBarController?.tabBar.isHidden = false
         tableView.reloadData()
         
         // enable edit bbi only if Memes
-        editButtonItem().enabled = appDelegate.memes.count > 0
+        editButtonItem.isEnabled = appDelegate.memes.count > 0
     }
     
-    override func setEditing(editing: Bool, animated: Bool) {
+    override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         
         // allow editing and switching tabs only if NOT editing cells
-        newMemeBBi.enabled = !editing
-        tabBarController?.tabBar.hidden = editing
+        newMemeBBi.isEnabled = !editing
+        tabBarController?.tabBar.isHidden = editing
     }
     
     // MARK: - Table view data source functions
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         // count of Memes
         return appDelegate.memes.count
     }
 
-    override func tableView(tableView: UITableView,
-                            cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView,
+                            cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         // get a cell
-        let cell = tableView.dequeueReusableCellWithIdentifier("SharedMemeTableViewCellID",
-                                                               forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SharedMemeTableViewCellID",
+                                                               for: indexPath)
 
         // retrieve Meme from shared store, set image and text
         let meme = appDelegate.memes[indexPath.row]
@@ -80,66 +80,66 @@ class SharedMemesTableViewController: UITableViewController {
     }
 
     // MARK: - Table view delegate functions
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         // cell selected. Navigate to MemeDetailVC
-        let vc = storyboard?.instantiateViewControllerWithIdentifier("MemeDetailViewController") as! MemeDetailViewController
+        let vc = storyboard?.instantiateViewController(withIdentifier: "MemeDetailViewController") as! MemeDetailViewController
         vc.memeIndex = indexPath.row
         
         // hide tab, push VC
-        tabBarController?.tabBar.hidden = true
+        tabBarController?.tabBar.isHidden = true
         navigationController?.pushViewController(vc, animated: true)
     }
 
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // OK to edit cell
         return true
     }
 
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         
         // can move only if more that one meme
         return appDelegate.memes.count > 1
     }
     
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
-        if editingStyle == .Delete {
+        if editingStyle == .delete {
             
             // delete meme and remove cell
-            appDelegate.memes.removeAtIndex(indexPath.row)
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            appDelegate.memes.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
             
             // if no memes, remove from editing
             if appDelegate.memes.count == 0 {
                 
                 setEditing(false, animated: true)
-                editButtonItem().enabled = false
+                editButtonItem.isEnabled = false
             }
         }
     }
     
-    override func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         
         // move meme
-        let meme = appDelegate.memes.removeAtIndex(sourceIndexPath.row)
-        appDelegate.memes.insert(meme, atIndex: destinationIndexPath.row)
+        let meme = appDelegate.memes.remove(at: sourceIndexPath.row)
+        appDelegate.memes.insert(meme, at: destinationIndexPath.row)
     }
     
     // MARK: - Launch Meme Editor
-    func newMemeBbiPressed(sender: UIBarButtonItem?) {
+    func newMemeBbiPressed(_ sender: UIBarButtonItem?) {
         
         // create MemeEditor embedded in navController
-        let vc = storyboard?.instantiateViewControllerWithIdentifier("MemeEditorViewController") as! MemeEditorViewController
+        let vc = storyboard?.instantiateViewController(withIdentifier: "MemeEditorViewController") as! MemeEditorViewController
         let nc = UINavigationController(rootViewController: vc)
         
         // animate presentation if invocation of this function was a result of newMemeBbi pressed "+"
         if let _ = sender {
-            presentViewController(nc, animated: true, completion: nil)
+            present(nc, animated: true, completion: nil)
         }
         else {
             // invocation as a result of no saved memes in viewDidLoad (e.g. initial app launch)
-            presentViewController(nc, animated: false, completion: nil)
+            present(nc, animated: false, completion: nil)
         }
     }
 
