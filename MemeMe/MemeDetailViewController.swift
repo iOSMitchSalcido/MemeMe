@@ -64,7 +64,7 @@ class MemeDetailViewController: UIViewController {
                                             // remove from memes, pop vc
                                             if let index = self.memeIndex {
                                                 self.appDelegate.memes.remove(at: index)
-                                                self.navigationController?.popViewController(animated: true)
+                                                let _ = self.navigationController?.popViewController(animated: true)
                                             }
         }
         
